@@ -63,6 +63,21 @@ rm_to_sku %>%
   dplyr::filter(!is.na(component)) -> rm_to_sku
 
 
+# mfg location ----
+fg_ref_mfg_ref <- read_excel("S:/Supply Chain Projects/RStudio/BoM/Master formats/FG_On_Hand/FG_ref_to_mfg_ref.xlsx")
+fg_ref_mfg_ref %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  dplyr::mutate(ref = gsub("-", "_", ref),
+                campus_ref = gsub("-", "_", campus_ref),
+                mfg_ref = gsub("-", "_", mfg_ref)) %>% 
+  tidyr::separate(ref, c("1", "2"), sep = "_") %>% 
+  rename(location = "1") %>% 
+  dplyr::select(-"2") %>% 
+  dplyr::mutate(ref = paste0(location, "_", sku)) %>% 
+  dplyr::relocate(location, mfg_loc, ref, campus_ref, mfg_ref) -> fg_ref_mfg_ref
+
+
 
 # combine oil list and RM to Sku
 oil_list %>% 
@@ -196,5 +211,6 @@ writexl::write_xlsx(oil_comsumption_comparison_final, "oil_compsumtion_compariso
 
 # now to do
 # check if open_order and sku_actual has all the lcoation correctly (should I do extra work like Linda did?)
+
 
 
