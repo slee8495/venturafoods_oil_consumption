@@ -243,6 +243,10 @@ colnames(oil_comsumption_comparison_final)[16] <- "Actual Shipped (Previous mont
 colnames(oil_comsumption_comparison_final)[17] <- "Open Order lbs. + Actual Shipped lbs."
 colnames(oil_comsumption_comparison_final)[18] <- "Consumptions"
 
+
+
+
+
 writexl::write_xlsx(oil_comsumption_comparison_final, "oil_compsumtion_comparison_fg.xlsx")
 
 
