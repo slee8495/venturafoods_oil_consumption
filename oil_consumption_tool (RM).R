@@ -250,23 +250,17 @@ oil_comsumption_comparison %>%
 # column rename
 oil_comsumption_comparison_final <- oil_comsumption_comparison
 colnames(oil_comsumption_comparison_final)[1] <- "ref"
-colnames(oil_comsumption_comparison_final)[2] <- "mfg_ref"
-colnames(oil_comsumption_comparison_final)[3] <- "Location"
-colnames(oil_comsumption_comparison_final)[4] <- "mfg_Location"
-colnames(oil_comsumption_comparison_final)[5] <- "SKU (FG)"
-colnames(oil_comsumption_comparison_final)[6] <- "Description"
-colnames(oil_comsumption_comparison_final)[7] <- "Label"
-colnames(oil_comsumption_comparison_final)[8] <- "Category"
-colnames(oil_comsumption_comparison_final)[9] <- "Category Name"
-colnames(oil_comsumption_comparison_final)[10] <- "Platform"
-colnames(oil_comsumption_comparison_final)[11] <- "Platform Name"
-colnames(oil_comsumption_comparison_final)[12] <- "Group"
-colnames(oil_comsumption_comparison_final)[13] <- "Group Name"
-colnames(oil_comsumption_comparison_final)[14] <- "Adjusted Forecast Pounds (lbs.)"
-colnames(oil_comsumption_comparison_final)[15] <- "Open Order Net Pounds (lbs.)"
-colnames(oil_comsumption_comparison_final)[16] <- "Actual Shipped (Previous month)"
-colnames(oil_comsumption_comparison_final)[17] <- "Open Order lbs. + Actual Shipped lbs."
-colnames(oil_comsumption_comparison_final)[18] <- "Consumptions"
+colnames(oil_comsumption_comparison_final)[2] <- "Location"
+colnames(oil_comsumption_comparison_final)[3] <- "Component"
+colnames(oil_comsumption_comparison_final)[4] <- "Category"
+colnames(oil_comsumption_comparison_final)[5] <- "Platform"
+colnames(oil_comsumption_comparison_final)[6] <- "Group"
+colnames(oil_comsumption_comparison_final)[7] <- "Adjusted Forecast Pounds (lbs.)"
+colnames(oil_comsumption_comparison_final)[8] <- "Open Order Net Pounds (lbs.)"
+colnames(oil_comsumption_comparison_final)[9] <- "Actual Shipped (Previous month)"
+colnames(oil_comsumption_comparison_final)[10] <- "Open Order lbs. + Actual Shipped lbs."
+colnames(oil_comsumption_comparison_final)[11] <- "Consumptions"
+
 
 writexl::write_xlsx(oil_comsumption_comparison_final, "oil_compsumtion_comparison_rm.xlsx")
 
