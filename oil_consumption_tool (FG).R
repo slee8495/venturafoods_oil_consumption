@@ -112,15 +112,18 @@ dsx %>%
   dplyr::mutate(ref = paste0(location, "_", sku)) %>% 
   dplyr::relocate(ref) -> dsx_with_oil
 
-dsx_with_oil
 
 # mfg_location in dsx_with_oil
 dsx_with_oil %>% 
   dplyr::left_join(fg_ref_mfg_ref %>%  dplyr::select(ref, mfg_loc), by = "ref") %>% 
-  dplyr::relocate(mfg_loc, .after = location) -> dsx_with_oil
+  dplyr::relocate(mfg_loc, .after = location) %>% 
+  dplyr::mutate(mfg_ref = paste0(mfg_loc, "_", sku)) %>% 
+  dplyr::relocate(mfg_ref, .after = ref) -> dsx_with_oil
 
 
-
+# lbs. only
+dsx_with_oil %>% 
+  dplyr::select(-adjusted_forecast_cases) -> dsx_with_oil
 
 
 ########################## actual sales & open orders ############################
@@ -132,7 +135,7 @@ dsx_with_oil %>%
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/BBAA886ACF43D82757EE568F91EEB679/K53--K46
 
 ## open orders ----
-open_order <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Open Orders - 1 Month (1).xlsx")
+open_order <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Open Orders - 1 Month (3).xlsx")
 
 open_order[-1, ] -> open_order
 colnames(open_order) <- open_order[1, ]
@@ -142,23 +145,28 @@ open_order %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   dplyr::rename(sku = product_label_sku,
-                description =na_2) %>% 
+                description =na_2,
+                open_order_cases = oo_open_order_cases,
+                open_order_net_lbs = oo_net_pounds_lbs) %>% 
   dplyr::mutate(sku = gsub("-", "", sku),
                 sales_order_requested_ship_date = as.Date(sales_order_requested_ship_date, origin = "1899-12-30"),
                 open_order_cases = replace(open_order_cases, is.na(open_order_cases), 0),
-                ref = paste0(location, "_", sku)) %>% 
-  dplyr::relocate(ref) %>% 
+                ref = paste0(location, "_", sku)) %>%
+  dplyr::left_join(fg_ref_mfg_ref %>%  dplyr::select(ref, mfg_loc), by = "ref") %>%
+  dplyr::mutate(mfg_ref = paste0(mfg_loc, "_", sku)) %>% 
+  dplyr::relocate(ref, mfg_ref) %>%
+  dplyr::relocate(mfg_loc, .after = location) %>% 
   dplyr::select(-na, -description, -na_3) -> open_order
 
 open_order %>% 
   dplyr::group_by(ref) %>% 
-  dplyr::summarise(open_order_cases = sum(open_order_cases)) %>% 
-  dplyr::mutate(open_order_cases = replace(open_order_cases, is.na(open_order_cases), 0)) -> open_order
+  dplyr::summarise(open_order_net_lbs = sum(open_order_net_lbs)) %>% 
+  dplyr::mutate(open_order_net_lbs = replace(open_order_net_lbs, is.na(open_order_net_lbs), 0)) -> open_order_pivot
 
 
 
 ## sku_actual ----
-sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Sku Actual Shipped (1).xlsx")
+sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Sku Actual Shipped (2).xlsx")
 
 sku_actual[-1, ] -> sku_actual
 colnames(sku_actual) <- sku_actual[1, ]
@@ -168,34 +176,49 @@ sku_actual %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   dplyr::rename(sku = product_label_sku,
-                actual_shipped = cases) %>% 
-  dplyr::select(sku, location, actual_shipped) %>% 
+                actual_shipped_cases = cases,
+                actual_shipped_lbs = net_pounds_lbs) %>% 
+  dplyr::select(sku, location, actual_shipped_lbs) %>% 
   dplyr::mutate(sku = gsub("-", "", sku),
                 ref = paste0(location, "_", sku)) %>% 
-  dplyr::relocate(ref) -> sku_actual
+  dplyr::left_join(fg_ref_mfg_ref %>% dplyr::select(ref, mfg_loc), by = "ref") %>%
+  dplyr::mutate(mfg_ref = paste0(mfg_loc, "_", sku)) %>% 
+  dplyr::relocate(ref, mfg_ref) %>% 
+  dplyr::relocate(mfg_loc, .after = location) -> sku_actual
 
 sku_actual %>% 
   dplyr::group_by(ref) %>% 
-  dplyr::summarise(actual_shipped = sum(actual_shipped)) %>% 
-  dplyr::mutate(actual_shipped = replace(actual_shipped, is.na(actual_shipped), 0)) -> sku_actual
+  dplyr::summarise(actual_shipped_lbs = sum(actual_shipped_lbs)) %>% 
+  dplyr::mutate(actual_shipped_lbs = replace(actual_shipped_lbs, is.na(actual_shipped_lbs), 0)) -> sku_actual_pivot
 
 
 # combine with dsx_with_oil x open_order
 
 dsx_with_oil %>% 
-  dplyr::left_join(open_order, by = "ref") %>% 
-  dplyr::left_join(sku_actual, by = "ref") %>% 
-  dplyr::mutate(open_order_cases = replace(open_order_cases, is.na(open_order_cases), 0),
-                actual_shipped = replace(actual_shipped, is.na(actual_shipped), 0),
-                open_order_actual_shipped = open_order_cases + actual_shipped,
-                adjusted_forecast_pounds_lbs = round(adjusted_forecast_pounds_lbs, 0),
-                ref = gsub("_", "-", ref)) -> oil_comsumption_comparison
+  dplyr::left_join(open_order_pivot, by = "ref") %>% 
+  dplyr::left_join(sku_actual_pivot, by = "ref") %>% 
+  dplyr::mutate(open_order_net_lbs = replace(open_order_net_lbs, is.na(open_order_net_lbs), 0),
+                actual_shipped_lbs = replace(actual_shipped_lbs, is.na(actual_shipped_lbs), 0),
+                open_order_actual_shipped = open_order_net_lbs + actual_shipped_lbs,
+                adjusted_forecast_pounds_lbs = round(adjusted_forecast_pounds_lbs, 0)) -> oil_comsumption_comparison
 
 
-sum(oil_comsumption_comparison$open_order_actual_shipped) / sum(oil_comsumption_comparison$adjusted_forecast_cases)
+# consumptions
+oil_comsumption_comparison %>% 
+  dplyr::mutate(consumptions = open_order_actual_shipped / adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(consumptions = replace(consumptions, is.na(consumptions), 0),
+                consumptions = replace(consumptions, is.nan(consumptions), 0),
+                consumptions = replace(consumptions, is.infinite(consumptions), 0),
+                consumptions = ifelse(adjusted_forecast_pounds_lbs == 0 & open_order_actual_shipped > 0, "forecasted 0, but sales happened", sprintf("%1.2f%%", 100*consumptions))   ) -> a
 
 
+sum(oil_comsumption_comparison$open_order_actual_shipped) / sum(oil_comsumption_comparison$adjusted_forecast_pounds_lbs)
 
+
+# final touch
+oil_comsumption_comparison %>% 
+  dplyr::mutate(ref = gsub("_", "-", ref),
+                mfg_ref = gsub("_", "-", mfg_ref)) -> oil_comsumption_comparison
 
 # column rename
 oil_comsumption_comparison_final <- oil_comsumption_comparison
