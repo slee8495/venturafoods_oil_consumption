@@ -21,7 +21,7 @@ oil_list %>%
 
 # DSX ----
 dsx <- read_excel(
-  "S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/DSX Forecast Backup - 2022.07.05.xlsx")
+  "S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.07.05.xlsx")
 
 dsx[-1,] -> dsx
 colnames(dsx) <- dsx[1, ]
@@ -47,6 +47,7 @@ dsx %>%
   dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
                 adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) %>% 
   dplyr::mutate(sku = gsub("-", "", sku)) -> dsx
+
 
 
 # BoM RM to sku ----
@@ -75,7 +76,8 @@ fg_ref_mfg_ref %>%
   rename(location = "1") %>% 
   dplyr::select(-"2") %>% 
   dplyr::mutate(ref = paste0(location, "_", sku)) %>% 
-  dplyr::relocate(location, mfg_loc, ref, campus_ref, mfg_ref) -> fg_ref_mfg_ref
+  dplyr::relocate(location, mfg_loc, ref, campus_ref, mfg_ref) %>% 
+  dplyr::mutate(location = as.integer(location)) -> fg_ref_mfg_ref
 
 
 
@@ -111,6 +113,15 @@ dsx %>%
   dplyr::relocate(ref) -> dsx_with_oil
 
 dsx_with_oil
+
+# mfg_location in dsx_with_oil
+dsx_with_oil %>% 
+  dplyr::left_join(fg_ref_mfg_ref %>%  dplyr::select(ref, mfg_loc), by = "ref") %>% 
+  dplyr::relocate(mfg_loc, .after = location) -> dsx_with_oil
+
+
+
+
 
 ########################## actual sales & open orders ############################
 
