@@ -129,7 +129,7 @@ forecast_with_oil %>%
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/BBAA886ACF43D82757EE568F91EEB679/K53--K46
 
 ## open orders ----
-open_order <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Open Orders - 1 Month (3).xlsx")
+open_order <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Open Orders - 1 Month (9).xlsx")
 
 open_order[-1, ] -> open_order
 colnames(open_order) <- open_order[1, ]
@@ -138,19 +138,23 @@ open_order[-1, ] -> open_order
 open_order %>% 
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
-  dplyr::rename(sku = product_label_sku,
-                description =na_2,
-                open_order_cases = oo_open_order_cases,
-                open_order_net_lbs = oo_net_pounds_lbs) %>% 
-  dplyr::mutate(sku = gsub("-", "", sku),
-                sales_order_requested_ship_date = as.Date(sales_order_requested_ship_date, origin = "1899-12-30"),
+  dplyr::rename(location_name = na,
+                mfg_loc = product_manufacturing_location,
+                mfg_loc_name = na_2,
+                component = base_product,
+                sku = product_label_sku,
+                description = na_3,
+                category = na_4,
+                category_no = product_category,
+                open_order_net_lbs = oo_net_pounds_lbs,
+                open_order_cases = oo_open_order_cases) %>% 
+  dplyr::mutate(sales_order_requested_ship_date = as.Date(sales_order_requested_ship_date, origin = "1899-12-30"),
                 open_order_cases = replace(open_order_cases, is.na(open_order_cases), 0),
-                ref = paste0(location, "_", sku)) %>%
-  dplyr::left_join(fg_ref_mfg_ref %>%  dplyr::select(ref, mfg_loc), by = "ref") %>%
-  dplyr::mutate(mfg_ref = paste0(mfg_loc, "_", sku)) %>% 
+                sku = gsub("-", "", sku), 
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku)) %>%
   dplyr::relocate(ref, mfg_ref) %>%
-  dplyr::relocate(mfg_loc, .after = location) %>% 
-  dplyr::select(-na, -description, -na_3) -> open_order
+  dplyr::relocate(mfg_loc, .after = location) -> open_order
 
 open_order %>% 
   dplyr::group_by(ref) %>% 
@@ -160,7 +164,7 @@ open_order %>%
 
 
 ## sku_actual ----
-sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Sku Actual Shipped (2).xlsx")
+sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Sku Actual Shipped (6).xlsx")
 
 sku_actual[-1, ] -> sku_actual
 colnames(sku_actual) <- sku_actual[1, ]
@@ -169,16 +173,19 @@ sku_actual[-1, ] -> sku_actual
 sku_actual %>% 
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
-  dplyr::rename(sku = product_label_sku,
+  dplyr::rename(location_name = na,
+                mfg_loc = product_manufacturing_location,
+                mfg_loc_name = na_2,
+                component = base_product,
+                description = na_3,
+                sku = product_label_sku,
+                category = na_5,
                 actual_shipped_cases = cases,
                 actual_shipped_lbs = net_pounds_lbs) %>% 
   dplyr::select(sku, location, actual_shipped_lbs) %>% 
   dplyr::mutate(sku = gsub("-", "", sku),
                 ref = paste0(location, "_", sku)) %>% 
-  dplyr::left_join(fg_ref_mfg_ref %>% dplyr::select(ref, mfg_loc), by = "ref") %>%
-  dplyr::mutate(mfg_ref = paste0(mfg_loc, "_", sku)) %>% 
-  dplyr::relocate(ref, mfg_ref) %>% 
-  dplyr::relocate(mfg_loc, .after = location) -> sku_actual
+  dplyr::relocate(ref) -> sku_actual
 
 sku_actual %>% 
   dplyr::group_by(ref) %>% 
@@ -214,7 +221,7 @@ oil_comsumption_comparison %>%
   dplyr::mutate(ref = gsub("_", "-", ref),
                 mfg_ref = gsub("_", "-", mfg_ref)) -> oil_comsumption_comparison
 
-str(oil_comsumption_comparison)
+
 # column rename
 oil_comsumption_comparison_final <- oil_comsumption_comparison
 colnames(oil_comsumption_comparison_final)[1] <- "ref"
@@ -236,7 +243,7 @@ colnames(oil_comsumption_comparison_final)[16] <- "Actual Shipped (Previous mont
 colnames(oil_comsumption_comparison_final)[17] <- "Open Order lbs. + Actual Shipped lbs."
 colnames(oil_comsumption_comparison_final)[18] <- "Consumptions"
 
-writexl::write_xlsx(oil_comsumption_comparison_final, "oil_compsumtion_comparison.xlsx")
+writexl::write_xlsx(oil_comsumption_comparison_final, "oil_compsumtion_comparison_fg.xlsx")
 
 
 
