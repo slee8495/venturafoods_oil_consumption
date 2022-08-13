@@ -15,7 +15,8 @@ oil_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/
 oil_list %>% 
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
-  dplyr::rename(component = material_number) %>% 
+  dplyr::rename(component = material_number,
+                oil_description = category) %>% 
   dplyr::mutate(component = as.double(component)) -> oil_list
 
 # Forecast ----
@@ -79,35 +80,43 @@ fg_ref_mfg_ref %>%
 
 # combine oil list and RM to Sku
 oil_list %>% 
-  dplyr::select(component) -> oil_list_2
+  dplyr::select(component, material_code, oil_description) -> oil_list_2
 
 rm_to_sku %>% 
   dplyr::select(component) -> rm_to_sku_comp
 
-dplyr::intersect(rm_to_sku_comp, oil_list_2) %>% 
-  dplyr::mutate(oil = "oil") -> oil_list_3
+dplyr::intersect(rm_to_sku_comp, dplyr::select(oil_list_2, 1)) %>% 
+  dplyr::mutate(oil = "oil") %>% 
+  dplyr::left_join(oil_list_2) -> oil_list_3
 
 rm_to_sku %>% 
   dplyr::left_join(oil_list_3, by = "component") %>% 
   filter(!is.na(oil)) %>% 
-  dplyr::select(component, sku) -> oil_included_sku
+  dplyr::select(-oil) -> oil_included_sku
 
 
 ################################ I'm currently here ###
-# vlookup for components
-forecast %>% 
-  dplyr::left_join(oil_included_sku, by = "sku") %>% 
-  dplyr::relocate(component, .after = "ref")-> a
 
-oil_included_sku
+# oil sku extract from forecast sku
+oil_included_sku[!duplicated(oil_included_sku[,c("component", "sku", "material_code")]),] -> oil_included_sku
 
+oil_included_sku %>% 
+  dplyr::select(sku) %>% 
+  dplyr::mutate(oil_included = "1") -> oil_included_sku_2
+
+oil_included_sku_2[-which(duplicated(oil_included_sku_2$sku)),] -> oil_included_sku_2
 
 forecast %>% 
   dplyr::left_join(oil_included_sku_2) %>% 
   dplyr::filter(!is.na(oil_included)) %>% 
-  dplyr::select(-oil_included) %>% 
-  dplyr::mutate(ref = paste0(location, "_", sku)) %>% 
-  dplyr::relocate(ref) -> forecast_with_oil
+  dplyr::select(-oil_included) -> forecast_with_oil
+
+
+# vlookup for components
+forecast_with_oil %>% 
+  dplyr::left_join(oil_included_sku, by = "sku") %>% 
+  dplyr::relocate(component,comp_description, material_code, oil_description) -> forecast_with_oil
+
 
 
 
@@ -125,7 +134,7 @@ forecast_with_oil %>%
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/BBAA886ACF43D82757EE568F91EEB679/K53--K46
 
 ## open orders ----
-open_order <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Open Orders - 1 Month (3).xlsx")
+open_order <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Open Orders - 1 Month (6).xlsx")
 
 open_order[-1, ] -> open_order
 colnames(open_order) <- open_order[1, ]
@@ -134,19 +143,19 @@ open_order[-1, ] -> open_order
 open_order %>% 
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
-  dplyr::rename(sku = product_label_sku,
-                description =na_2,
-                open_order_cases = oo_open_order_cases,
-                open_order_net_lbs = oo_net_pounds_lbs) %>% 
-  dplyr::mutate(sku = gsub("-", "", sku),
-                sales_order_requested_ship_date = as.Date(sales_order_requested_ship_date, origin = "1899-12-30"),
+  dplyr::rename(location_name = na,
+                mfg_loc = product_manufacturing_location,
+                component = base_product,
+                description = na_3,
+                mfg_loc_name = na_2,
+                open_order_net_lbs = oo_net_pounds_lbs,
+                open_order_cases = oo_open_order_cases) %>% 
+  dplyr::mutate(sales_order_requested_ship_date = as.Date(sales_order_requested_ship_date, origin = "1899-12-30"),
                 open_order_cases = replace(open_order_cases, is.na(open_order_cases), 0),
-                ref = paste0(location, "_", sku)) %>%
-  dplyr::left_join(fg_ref_mfg_ref %>%  dplyr::select(ref, mfg_loc), by = "ref") %>%
-  dplyr::mutate(mfg_ref = paste0(mfg_loc, "_", sku)) %>% 
+                ref = paste0(location, "_", component),
+                mfg_ref = paste0(mfg_loc, "_", component)) %>%
   dplyr::relocate(ref, mfg_ref) %>%
-  dplyr::relocate(mfg_loc, .after = location) %>% 
-  dplyr::select(-na, -description, -na_3) -> open_order
+  dplyr::relocate(mfg_loc, .after = location) -> open_order
 
 open_order %>% 
   dplyr::group_by(ref) %>% 
@@ -156,7 +165,7 @@ open_order %>%
 
 
 ## sku_actual ----
-sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Sku Actual Shipped (2).xlsx")
+sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Sku Actual Shipped (3).xlsx")
 
 sku_actual[-1, ] -> sku_actual
 colnames(sku_actual) <- sku_actual[1, ]
@@ -165,14 +174,16 @@ sku_actual[-1, ] -> sku_actual
 sku_actual %>% 
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
-  dplyr::rename(sku = product_label_sku,
+  dplyr::rename(location_name = na,
+                mfg_loc = product_manufacturing_location,
+                mfg_loc_name = na_2,
+                component = base_product,
+                description = na_3,
                 actual_shipped_cases = cases,
                 actual_shipped_lbs = net_pounds_lbs) %>% 
-  dplyr::select(sku, location, actual_shipped_lbs) %>% 
-  dplyr::mutate(sku = gsub("-", "", sku),
-                ref = paste0(location, "_", sku)) %>% 
-  dplyr::left_join(fg_ref_mfg_ref %>% dplyr::select(ref, mfg_loc), by = "ref") %>%
-  dplyr::mutate(mfg_ref = paste0(mfg_loc, "_", sku)) %>% 
+  dplyr::select(component, location, mfg_loc, actual_shipped_lbs) %>% 
+  dplyr::mutate(ref = paste0(location, "_", component)) %>% 
+  dplyr::mutate(mfg_ref = paste0(mfg_loc, "_", component)) %>% 
   dplyr::relocate(ref, mfg_ref) %>% 
   dplyr::relocate(mfg_loc, .after = location) -> sku_actual
 
@@ -181,6 +192,9 @@ sku_actual %>%
   dplyr::summarise(actual_shipped_lbs = sum(actual_shipped_lbs)) %>% 
   dplyr::mutate(actual_shipped_lbs = replace(actual_shipped_lbs, is.na(actual_shipped_lbs), 0)) -> sku_actual_pivot
 
+
+
+#### Currently, I'm here ###
 
 # combine with dsx_with_oil x open_order
 
