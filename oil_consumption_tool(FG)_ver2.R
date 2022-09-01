@@ -9,6 +9,14 @@ library(janitor)
 library(lubridate)
 
 
+### Note
+# You have the video recorded
+# Make sure forecast is lag1, from ms. if not, use Wilson's file. 
+# mfg_location step can be eliminated
+# 6 oils are not found from intersect code. what are those?? 
+# In the dataset, not only FG skus in the row, but I also need oils in the rows. (2 tabs, 1 only for FG, 2 with oil)
+# use MS link from Linda
+
 # Oil List ----
 oil_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Oil types AS400 JDE.xlsx")
 
@@ -47,8 +55,21 @@ forecast %>%
 
 
 
+
+# BoM Report ----
+bom <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 08.29.22.xlsx", 
+                        sheet = "BoM")
+
+# Quantity w/ Scraps
+# Business Unit - mfg_location
+# Compt# (there are oils and not oils. bring oils only)
+# To know the consumption. forecasat cases x quantity w/ scrap
+
+
+
+
 # BoM RM to sku ----
-rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 08.03.22.xlsx", 
+rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 08.29.22.xlsx", 
                         sheet = "RM to SKU")
 
 rm_to_sku %>% 
@@ -61,7 +82,7 @@ rm_to_sku %>%
   dplyr::filter(!is.na(component)) -> rm_to_sku
 
 
-# mfg location ----
+# mfg location (This step can be eliminated) ----
 fg_ref_mfg_ref <- read_excel("S:/Supply Chain Projects/RStudio/BoM/Master formats/FG_On_Hand/FG_ref_to_mfg_ref.xlsx")
 fg_ref_mfg_ref %>%
   janitor::clean_names() %>%
@@ -216,6 +237,8 @@ oil_comsumption_comparison %>%
 sum(oil_comsumption_comparison$open_order_actual_shipped) / sum(oil_comsumption_comparison$adjusted_forecast_pounds_lbs)
 
 
+
+#################################################################################################################################################
 # final touch
 oil_comsumption_comparison %>% 
   dplyr::mutate(ref = gsub("_", "-", ref),
