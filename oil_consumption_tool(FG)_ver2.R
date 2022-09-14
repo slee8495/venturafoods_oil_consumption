@@ -314,3 +314,15 @@ writexl::write_xlsx(oil_comsumption_comparison_final, "oil_consumption_compariso
 
 
 
+
+
+## remove stat 1 forecast..
+## Oil description, also oil name. (i.e: soy bean.. canola..)
+## JDE oil number as well (file from Naseem)
+## Not just open order + actual shipped.. instead we also consider adding All order qty
+## review the calculation on last column: Difference in Consumption (Adjusted forecast)
+## one more column for below
+# consumption_qty(same logic but for forecast qty. (adjusted_forecast * scrap))  so that way we can compare better
+
+## get the new file for August
+
