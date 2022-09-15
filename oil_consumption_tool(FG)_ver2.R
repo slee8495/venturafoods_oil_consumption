@@ -42,12 +42,10 @@ dsx %>%
                 ref = paste0(location, "_", sku),
                 mfg_ref = paste0(mfg_loc, "_", sku),
                 label = stringr::str_sub(sku, 6, 8)) %>% 
-  dplyr::select(ref, mfg_ref, location, mfg_loc, sku, sku_description, label, category, platform, group_no, group, stat_forecast_cases, adjusted_forecast_cases,
-                stat_forecast_pounds_lbs, adjusted_forecast_pounds_lbs) %>% 
-  dplyr::mutate(stat_forecast_pounds_lbs = replace(stat_forecast_pounds_lbs, is.na(stat_forecast_pounds_lbs), 0),
-                adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
-                stat_forecast_cases = replace(stat_forecast_cases, is.na(stat_forecast_cases), 0),
-                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases ), 0)) -> forecast 
+  dplyr::select(ref, mfg_ref, location, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast 
 
 
 
@@ -244,21 +242,27 @@ oil_comsumption_comparison %>%
 
 
 oil_comsumption_comparison_ver2 %>% 
-  dplyr::mutate(consumption_qty = (open_order_actual_shipped_cases * quantity_w_scrap),
-                consumption_percent_stat = (stat_forecast_cases * quantity_w_scrap) / consumption_qty,
+  dplyr::mutate(forecasted_oil_qty = (adjusted_forecast_cases * quantity_w_scrap),
+                consumption_qty = (open_order_actual_shipped_cases * quantity_w_scrap),
                 consumption_percent_adjusted = (adjusted_forecast_cases * quantity_w_scrap) / consumption_qty,
-                diff_in_consumption_stat =  (stat_forecast_cases * quantity_w_scrap) - consumption_qty,
                 diff_in_consumption_adjusted =  (adjusted_forecast_cases * quantity_w_scrap) - consumption_qty) %>% 
-  dplyr::mutate(consumption_percent_stat = replace(consumption_percent_stat, is.na(consumption_percent_stat) | is.nan(consumption_percent_stat) | is.infinite(consumption_percent_stat), 0),
-                consumption_percent_adjusted = replace(consumption_percent_adjusted, is.na(consumption_percent_adjusted) | is.nan(consumption_percent_adjusted) | is.infinite(consumption_percent_adjusted), 0)) %>% 
-  dplyr::mutate(consumption_percent_stat = sprintf("%1.2f%%", 100*consumption_percent_stat),
-                consumption_percent_adjusted = sprintf("%1.2f%%", 100*consumption_percent_adjusted)) %>% 
+  dplyr::mutate(consumption_percent_adjusted = replace(consumption_percent_adjusted, is.na(consumption_percent_adjusted) | is.nan(consumption_percent_adjusted) | is.infinite(consumption_percent_adjusted), 0)) %>% 
+  dplyr::mutate(consumption_percent_adjusted = sprintf("%1.2f%%", 100*consumption_percent_adjusted)) %>% 
   dplyr::select(-ref) %>% 
-  dplyr::arrange(location, mfg_loc) -> oil_comsumption_comparison_ver2
+  dplyr::arrange(location, mfg_loc) %>% 
+  dplyr::relocate(component, .after = group) -> oil_comsumption_comparison_ver2
 
 
 
 
+oil_list %>% 
+  dplyr::select(component, category) %>% 
+  dplyr::rename(oil_description = category) -> oil_desc
+
+
+oil_comsumption_comparison_ver2 %>% 
+  dplyr::left_join(oil_desc) %>% 
+  dplyr::relocate(oil_description, .after = component) -> oil_comsumption_comparison_ver2
 
 #################################################################################################################################################
 #################################################################################################################################################
@@ -288,9 +292,9 @@ colnames(oil_comsumption_comparison_final)[7] <- "Category"
 colnames(oil_comsumption_comparison_final)[8] <- "Platform"
 colnames(oil_comsumption_comparison_final)[9] <- "Group Code"
 colnames(oil_comsumption_comparison_final)[10] <- "Group Name"
-colnames(oil_comsumption_comparison_final)[11] <- "Stat Forecast Cases"
-colnames(oil_comsumption_comparison_final)[12] <- "Adjusted Forecast Cases"
-colnames(oil_comsumption_comparison_final)[13] <- "Stat Forecast Net Pounds (lbs.)"
+colnames(oil_comsumption_comparison_final)[11] <- "Component"
+colnames(oil_comsumption_comparison_final)[12] <- "Oil Description"
+colnames(oil_comsumption_comparison_final)[13] <- "Adjusted Forecast Cases"
 colnames(oil_comsumption_comparison_final)[14] <- "Adjusted Forecast Net Pounds (lbs.)"
 colnames(oil_comsumption_comparison_final)[15] <- "Open Order Cases"
 colnames(oil_comsumption_comparison_final)[16] <- "Open Order Net Pounds (lbs.)"
@@ -298,13 +302,11 @@ colnames(oil_comsumption_comparison_final)[17] <- "Actual Shipped Cases"
 colnames(oil_comsumption_comparison_final)[18] <- "Actual Shipped Net Pounds (lbs.)"
 colnames(oil_comsumption_comparison_final)[19] <- "Open Order lbs. + Actual Shipped Cases"
 colnames(oil_comsumption_comparison_final)[20] <- "Open Order lbs. + Actual Shipped Net Pounds (lbs.)"
-colnames(oil_comsumption_comparison_final)[21] <- "Component"
-colnames(oil_comsumption_comparison_final)[22] <- "Quantity w/Scrap"
+colnames(oil_comsumption_comparison_final)[21] <- "Quantity w/Scrap"
+colnames(oil_comsumption_comparison_final)[22] <- "Forecasted Oil Qty"
 colnames(oil_comsumption_comparison_final)[23] <- "Consumption Quantity"
-colnames(oil_comsumption_comparison_final)[24] <- "Consumption % (Stat forecast)"
-colnames(oil_comsumption_comparison_final)[25] <- "Consumption % (Adjusted forecast)"
-colnames(oil_comsumption_comparison_final)[26] <- "Difference in Consumption (Stat forecast)"
-colnames(oil_comsumption_comparison_final)[27] <- "Difference in Consumption (Adjusted forecast)"
+colnames(oil_comsumption_comparison_final)[24] <- "Consumption % (Adjusted forecast)"
+colnames(oil_comsumption_comparison_final)[25] <- "Difference in Consumption (Adjusted forecast)"
 
 
 
@@ -316,13 +318,9 @@ writexl::write_xlsx(oil_comsumption_comparison_final, "oil_consumption_compariso
 
 
 
-## remove stat 1 forecast..
-## Oil description, also oil name. (i.e: soy bean.. canola..)
-## JDE oil number as well (file from Naseem)
+
 ## Not just open order + actual shipped.. instead we also consider adding All order qty
 ## review the calculation on last column: Difference in Consumption (Adjusted forecast)
-## one more column for below
-# consumption_qty(same logic but for forecast qty. (adjusted_forecast * scrap))  so that way we can compare better
 
-## get the new file for August
+
 
