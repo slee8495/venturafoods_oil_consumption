@@ -19,6 +19,7 @@ oil_list %>%
 
 
 # Forecast dsx (for lag1, use the first day of the month) ----
+# Make sure to put the date correctly few below ----
 dsx <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.08.01.xlsx")
 
 dsx[-1, ] -> dsx
@@ -211,6 +212,8 @@ sku_actual %>%
 forecast_with_oil %>% 
   dplyr::left_join(open_order_pivot, by = "mfg_ref") %>% 
   dplyr::left_join(sku_actual_pivot, by = "mfg_ref") %>% 
+  dplyr::mutate(open_order_cases = replace(open_order_cases, is.na(open_order_cases), 0),
+                actual_shipped_cases = replace(actual_shipped_cases, is.na(actual_shipped_cases), 0)) %>% 
   dplyr::mutate(open_order_net_lbs = replace(open_order_net_lbs, is.na(open_order_net_lbs), 0),
                 actual_shipped_lbs = replace(actual_shipped_lbs, is.na(actual_shipped_lbs), 0),
                 open_order_actual_shipped_lbs = open_order_net_lbs + actual_shipped_lbs,
@@ -230,6 +233,40 @@ oil_comsumption_comparison %>%
 sum(oil_comsumption_comparison$open_order_actual_shipped_lbs) / sum(oil_comsumption_comparison$adjusted_forecast_pounds_lbs)
 
 
+################################################# Sales Orders ##################################################
+# Input sales orders ----
+# https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/88A31CA8184AD038FB69CD95920E4C61/K53--K46
+
+sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Order and Shipped History - Month.xlsx")
+
+sales_orders[-1:-3, ] %>% 
+  dplyr::rename(location = "Visualization 1",
+                mfg_loc = "...2",
+                sku = "...4",
+                description = "...5",
+                original_order_qty = "...6") %>% 
+  dplyr::select(-"...3") %>% 
+  dplyr::mutate(original_order_qty = replace(original_order_qty, is.na(original_order_qty), 0),
+                sku = gsub("-", "", sku),
+                mfg_ref = paste0(location, "_", sku)) %>% 
+  readr::type_convert() -> sales_orders
+
+
+sales_orders %>% 
+  dplyr::group_by(mfg_ref) %>% 
+  dplyr::summarise(original_order_qty = sum(original_order_qty)) -> sales_orders_pivot
+
+
+oil_comsumption_comparison %>% 
+  dplyr::left_join(sales_orders_pivot, by = "mfg_ref") %>% 
+  dplyr::relocate(original_order_qty, .before = consumptions) -> oil_comsumption_comparison
+
+
+# NA to 0
+oil_comsumption_comparison %>% 
+  dplyr::mutate(original_order_qty = replace(original_order_qty, is.na(original_order_qty), 0)) -> oil_comsumption_comparison
+
+
 
 ################################################ second phase #######################################
 bom %>% 
@@ -242,12 +279,20 @@ oil_comsumption_comparison %>%
 
 
 oil_comsumption_comparison_ver2 %>% 
-  dplyr::mutate(forecasted_oil_qty = (adjusted_forecast_cases * quantity_w_scrap),
-                consumption_qty = (open_order_actual_shipped_cases * quantity_w_scrap),
-                consumption_percent_adjusted = (adjusted_forecast_cases * quantity_w_scrap) / consumption_qty,
-                diff_in_consumption_adjusted =  (adjusted_forecast_cases * quantity_w_scrap) - consumption_qty) %>% 
-  dplyr::mutate(consumption_percent_adjusted = replace(consumption_percent_adjusted, is.na(consumption_percent_adjusted) | is.nan(consumption_percent_adjusted) | is.infinite(consumption_percent_adjusted), 0)) %>% 
-  dplyr::mutate(consumption_percent_adjusted = sprintf("%1.2f%%", 100*consumption_percent_adjusted)) %>% 
+  dplyr::mutate(forecasted_oil_qty = adjusted_forecast_cases * quantity_w_scrap,
+                consumption_qty_actual_shipped = open_order_actual_shipped_cases * quantity_w_scrap,
+                consumption_percent_adjusted_actual_shipped = forecasted_oil_qty / consumption_qty_actual_shipped) %>%
+  
+  dplyr::mutate(consumption_qty_sales_order_qty = original_order_qty * quantity_w_scrap,
+                consumption_percent_adjusted_sales_order = forecasted_oil_qty / consumption_qty_sales_order_qty) %>% 
+  
+               # diff_in_consumption_adjusted =  (adjusted_forecast_cases * quantity_w_scrap) - consumption_qty) %>% 
+  
+  dplyr::mutate(consumption_percent_adjusted_actual_shipped = replace(consumption_percent_adjusted_actual_shipped, is.na(consumption_percent_adjusted_actual_shipped) | is.nan(consumption_percent_adjusted_actual_shipped) | is.infinite(consumption_percent_adjusted_actual_shipped), 0)) %>% 
+  dplyr::mutate(consumption_percent_adjusted_actual_shipped = sprintf("%1.2f%%", 100*consumption_percent_adjusted_actual_shipped)) %>% 
+  dplyr::mutate(consumption_percent_adjusted_sales_order = replace(consumption_percent_adjusted_sales_order, is.na(consumption_percent_adjusted_sales_order) | is.nan(consumption_percent_adjusted_sales_order) | is.infinite(consumption_percent_adjusted_sales_order), 0)) %>% 
+  dplyr::mutate(consumption_percent_adjusted_sales_order = sprintf("%1.2f%%", 100*consumption_percent_adjusted_sales_order)) %>% 
+  
   dplyr::select(-ref) %>% 
   dplyr::arrange(location, mfg_loc) %>% 
   dplyr::relocate(component, .after = group) -> oil_comsumption_comparison_ver2
@@ -319,8 +364,8 @@ writexl::write_xlsx(oil_comsumption_comparison_final, "oil_consumption_compariso
 
 
 
-## Not just open order + actual shipped.. instead we also consider adding All order qty
 ## review the calculation on last column: Difference in Consumption (Adjusted forecast)
 
-
-
+### In the discussion with Naseem and Linda
+# 1. Original order Qty is 0 when actual shipped are not 0
+# 2. Do we need F, G column in excel file? 
