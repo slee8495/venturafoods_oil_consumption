@@ -367,5 +367,6 @@ writexl::write_xlsx(oil_comsumption_comparison_final, "oil_consumption_compariso
 ## review the calculation on last column: Difference in Consumption (Adjusted forecast)
 
 ### In the discussion with Naseem and Linda
-# 1. Original order Qty is 0 when actual shipped are not 0
-# 2. Do we need F, G column in excel file? 
+# 1. Original order Qty is 0 when actual shipped are not 0 (because of the branch transfer)
+# 2. Things to discuss: Branch Transfer..?
+
