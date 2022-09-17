@@ -369,4 +369,4 @@ writexl::write_xlsx(oil_comsumption_comparison_final, "oil_consumption_compariso
 ### In the discussion with Naseem and Linda
 # 1. Original order Qty is 0 when actual shipped are not 0 (because of the branch transfer)
 # 2. Things to discuss: Branch Transfer..?
-
+# 3. Pivot Table view will be in MicroStragegy directly. not from R
