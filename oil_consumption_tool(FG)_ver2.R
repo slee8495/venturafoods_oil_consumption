@@ -43,14 +43,19 @@ dsx %>%
                 ref = paste0(location, "_", sku),
                 mfg_ref = paste0(mfg_loc, "_", sku),
                 label = stringr::str_sub(sku, 6, 8)) %>% 
-  dplyr::select(ref, mfg_ref, location, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+  dplyr::select(mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
                 adjusted_forecast_pounds_lbs) %>% 
   dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
                 adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast 
 
 
+forecast %>% 
+  dplyr::group_by(mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) -> forecast
 
 
+str(forecast)
 
 # BoM RM to sku ----
 rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 08.29.22.xlsx", 
@@ -248,7 +253,7 @@ sales_orders[-1:-3, ] %>%
   dplyr::select(-"...3") %>% 
   dplyr::mutate(original_order_qty = replace(original_order_qty, is.na(original_order_qty), 0),
                 sku = gsub("-", "", sku),
-                mfg_ref = paste0(location, "_", sku)) %>% 
+                mfg_ref = paste0(mfg_loc, "_", sku)) %>% 
   readr::type_convert() -> sales_orders
 
 
@@ -285,16 +290,19 @@ oil_comsumption_comparison_ver2 %>%
   
   dplyr::mutate(consumption_qty_sales_order_qty = original_order_qty * quantity_w_scrap,
                 consumption_percent_adjusted_sales_order = forecasted_oil_qty / consumption_qty_sales_order_qty) %>% 
-  
-               # diff_in_consumption_adjusted =  (adjusted_forecast_cases * quantity_w_scrap) - consumption_qty) %>% 
+
   
   dplyr::mutate(consumption_percent_adjusted_actual_shipped = replace(consumption_percent_adjusted_actual_shipped, is.na(consumption_percent_adjusted_actual_shipped) | is.nan(consumption_percent_adjusted_actual_shipped) | is.infinite(consumption_percent_adjusted_actual_shipped), 0)) %>% 
   dplyr::mutate(consumption_percent_adjusted_actual_shipped = sprintf("%1.2f%%", 100*consumption_percent_adjusted_actual_shipped)) %>% 
   dplyr::mutate(consumption_percent_adjusted_sales_order = replace(consumption_percent_adjusted_sales_order, is.na(consumption_percent_adjusted_sales_order) | is.nan(consumption_percent_adjusted_sales_order) | is.infinite(consumption_percent_adjusted_sales_order), 0)) %>% 
   dplyr::mutate(consumption_percent_adjusted_sales_order = sprintf("%1.2f%%", 100*consumption_percent_adjusted_sales_order)) %>% 
   
-  dplyr::select(-ref) %>% 
-  dplyr::arrange(location, mfg_loc) %>% 
+  
+  dplyr::mutate(diff_between_forecast_actual =  forecasted_oil_qty - consumption_qty_actual_shipped,
+                diff_between_forecast_original = forecasted_oil_qty - consumption_qty_sales_order_qty) %>% 
+
+  
+  dplyr::arrange(mfg_ref) %>% 
   dplyr::relocate(component, .after = group) -> oil_comsumption_comparison_ver2
 
 
@@ -309,6 +317,9 @@ oil_comsumption_comparison_ver2 %>%
   dplyr::left_join(oil_desc) %>% 
   dplyr::relocate(oil_description, .after = component) -> oil_comsumption_comparison_ver2
 
+oil_comsumption_comparison_ver2 %>% 
+  dplyr::filter(mfg_loc != "-1") -> oil_comsumption_comparison_ver2
+
 #################################################################################################################################################
 #################################################################################################################################################
 
@@ -321,37 +332,40 @@ oil_comsumption_comparison_ver2 %>%
 oil_comsumption_comparison_final <- oil_comsumption_comparison_ver2
 
 oil_comsumption_comparison_final %>% 
-  dplyr::relocate(open_order_cases, .before = open_order_net_lbs) %>% 
-  dplyr::relocate(actual_shipped_cases, .before = actual_shipped_lbs) %>% 
-  dplyr::relocate(open_order_actual_shipped_cases, .before = open_order_actual_shipped_lbs) -> oil_comsumption_comparison_final
+  dplyr::select(mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, component, oil_description,
+                quantity_w_scrap, adjusted_forecast_cases, forecasted_oil_qty, 
+                open_order_cases, actual_shipped_cases, open_order_actual_shipped_cases, 
+                consumption_qty_actual_shipped, consumption_percent_adjusted_actual_shipped,
+                diff_between_forecast_actual, original_order_qty, consumption_qty_sales_order_qty, 
+                consumption_percent_adjusted_sales_order, diff_between_forecast_original) -> oil_comsumption_comparison_final
+
 
 str(oil_comsumption_comparison_final)
 
 colnames(oil_comsumption_comparison_final)[1] <- "mfg ref"
-colnames(oil_comsumption_comparison_final)[2] <- "Location"
-colnames(oil_comsumption_comparison_final)[3] <- "mfg Location"
-colnames(oil_comsumption_comparison_final)[4] <- "SKU (FG)"
-colnames(oil_comsumption_comparison_final)[5] <- "Description"
-colnames(oil_comsumption_comparison_final)[6] <- "Label"
-colnames(oil_comsumption_comparison_final)[7] <- "Category"
-colnames(oil_comsumption_comparison_final)[8] <- "Platform"
-colnames(oil_comsumption_comparison_final)[9] <- "Group Code"
-colnames(oil_comsumption_comparison_final)[10] <- "Group Name"
-colnames(oil_comsumption_comparison_final)[11] <- "Component"
-colnames(oil_comsumption_comparison_final)[12] <- "Oil Description"
+colnames(oil_comsumption_comparison_final)[2] <- "mfg Location"
+colnames(oil_comsumption_comparison_final)[3] <- "SKU (FG)"
+colnames(oil_comsumption_comparison_final)[4] <- "Description"
+colnames(oil_comsumption_comparison_final)[5] <- "Label"
+colnames(oil_comsumption_comparison_final)[6] <- "Category"
+colnames(oil_comsumption_comparison_final)[7] <- "Platform"
+colnames(oil_comsumption_comparison_final)[8] <- "Group Code"
+colnames(oil_comsumption_comparison_final)[9] <- "Group Name"
+colnames(oil_comsumption_comparison_final)[10] <- "Component (Oil)"
+colnames(oil_comsumption_comparison_final)[11] <- "Oil Description"
+colnames(oil_comsumption_comparison_final)[12] <- "Quantity w/Scrap"
 colnames(oil_comsumption_comparison_final)[13] <- "Adjusted Forecast Cases"
-colnames(oil_comsumption_comparison_final)[14] <- "Adjusted Forecast Net Pounds (lbs.)"
+colnames(oil_comsumption_comparison_final)[14] <- "Forecasted Oil Qty"
 colnames(oil_comsumption_comparison_final)[15] <- "Open Order Cases"
-colnames(oil_comsumption_comparison_final)[16] <- "Open Order Net Pounds (lbs.)"
-colnames(oil_comsumption_comparison_final)[17] <- "Actual Shipped Cases"
-colnames(oil_comsumption_comparison_final)[18] <- "Actual Shipped Net Pounds (lbs.)"
-colnames(oil_comsumption_comparison_final)[19] <- "Open Order lbs. + Actual Shipped Cases"
-colnames(oil_comsumption_comparison_final)[20] <- "Open Order lbs. + Actual Shipped Net Pounds (lbs.)"
-colnames(oil_comsumption_comparison_final)[21] <- "Quantity w/Scrap"
-colnames(oil_comsumption_comparison_final)[22] <- "Forecasted Oil Qty"
-colnames(oil_comsumption_comparison_final)[23] <- "Consumption Quantity"
-colnames(oil_comsumption_comparison_final)[24] <- "Consumption % (Adjusted forecast)"
-colnames(oil_comsumption_comparison_final)[25] <- "Difference in Consumption (Adjusted forecast)"
+colnames(oil_comsumption_comparison_final)[16] <- "Actual Shipped Cases"
+colnames(oil_comsumption_comparison_final)[17] <- "Open Order Cases + Actual Shipped Cases"
+colnames(oil_comsumption_comparison_final)[18] <- "Consumption Quantity (Open Order + Actual Shipped)"
+colnames(oil_comsumption_comparison_final)[19] <- "Consumption % (by Adjusted forecast - Open Order + Actual Shipped)"
+colnames(oil_comsumption_comparison_final)[20] <- "Diff (Forecasted - Actual Shipped)"
+colnames(oil_comsumption_comparison_final)[21] <- "Original Sales Order Qty (Cases)"
+colnames(oil_comsumption_comparison_final)[22] <- "Consumption Quantity (Original Sales Order Qty)"
+colnames(oil_comsumption_comparison_final)[23] <- "Consumption % (by Adjusted forecast - Original Sales Order Qty)"
+colnames(oil_comsumption_comparison_final)[24] <- "Diff (Forecasted - Original Sales Order)"
 
 
 
@@ -367,6 +381,4 @@ writexl::write_xlsx(oil_comsumption_comparison_final, "oil_consumption_compariso
 ## review the calculation on last column: Difference in Consumption (Adjusted forecast)
 
 ### In the discussion with Naseem and Linda
-# 1. Original order Qty is 0 when actual shipped are not 0 (because of the branch transfer)
-# 2. Things to discuss: Branch Transfer..?
 # 3. Pivot Table view will be in MicroStragegy directly. not from R
