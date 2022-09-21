@@ -286,11 +286,11 @@ oil_comsumption_comparison %>%
 oil_comsumption_comparison_ver2 %>% 
   dplyr::mutate(forecasted_oil_qty = adjusted_forecast_cases * quantity_w_scrap,
                 consumption_qty_actual_shipped = open_order_actual_shipped_cases * quantity_w_scrap,
-                consumption_percent_adjusted_actual_shipped = forecasted_oil_qty / consumption_qty_actual_shipped) %>%
+                consumption_percent_adjusted_actual_shipped = consumption_qty_actual_shipped / forecasted_oil_qty) %>%
   
   dplyr::mutate(consumption_qty_sales_order_qty = original_order_qty * quantity_w_scrap,
-                consumption_percent_adjusted_sales_order = forecasted_oil_qty / consumption_qty_sales_order_qty) %>% 
-
+                consumption_percent_adjusted_sales_order = consumption_qty_sales_order_qty / forecasted_oil_qty) %>% 
+  
   
   dplyr::mutate(consumption_percent_adjusted_actual_shipped = replace(consumption_percent_adjusted_actual_shipped, is.na(consumption_percent_adjusted_actual_shipped) | is.nan(consumption_percent_adjusted_actual_shipped) | is.infinite(consumption_percent_adjusted_actual_shipped), 0)) %>% 
   dplyr::mutate(consumption_percent_adjusted_actual_shipped = sprintf("%1.2f%%", 100*consumption_percent_adjusted_actual_shipped)) %>% 
