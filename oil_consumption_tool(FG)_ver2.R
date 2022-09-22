@@ -226,16 +226,7 @@ forecast_with_oil %>%
                 adjusted_forecast_pounds_lbs = round(adjusted_forecast_pounds_lbs, 0)) -> oil_comsumption_comparison
 
 
-# consumptions
-oil_comsumption_comparison %>% 
-  dplyr::mutate(consumptions = open_order_actual_shipped_lbs / adjusted_forecast_pounds_lbs) %>% 
-  dplyr::mutate(consumptions = replace(consumptions, is.na(consumptions), 0),
-                consumptions = replace(consumptions, is.nan(consumptions), 0),
-                consumptions = replace(consumptions, is.infinite(consumptions), 0),
-                consumptions = ifelse(adjusted_forecast_pounds_lbs == 0 & open_order_actual_shipped_lbs > 0, "forecasted 0, but sales happened", sprintf("%1.2f%%", 100*consumptions))   ) -> oil_comsumption_comparison
 
-
-sum(oil_comsumption_comparison$open_order_actual_shipped_lbs) / sum(oil_comsumption_comparison$adjusted_forecast_pounds_lbs)
 
 
 ################################################# Sales Orders ##################################################
@@ -263,8 +254,7 @@ sales_orders %>%
 
 
 oil_comsumption_comparison %>% 
-  dplyr::left_join(sales_orders_pivot, by = "mfg_ref") %>% 
-  dplyr::relocate(original_order_qty, .before = consumptions) -> oil_comsumption_comparison
+  dplyr::left_join(sales_orders_pivot, by = "mfg_ref") -> oil_comsumption_comparison
 
 
 # NA to 0
@@ -278,8 +268,7 @@ bom %>%
   dplyr::select(sku, component, quantity_w_scrap) -> bom_2
 
 oil_comsumption_comparison %>% 
-  dplyr::left_join(bom_2) %>% 
-  dplyr::select(-consumptions) -> oil_comsumption_comparison_ver2
+  dplyr::left_join(bom_2) -> oil_comsumption_comparison_ver2
 
 
 
