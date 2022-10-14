@@ -71,7 +71,10 @@ forecast %>%
                    adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) -> forecast
 
 
-str(forecast)
+forecast %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast
+
 
 # BoM RM to sku ----
 rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/IQR archive/Raw Material Inventory Health (IQR) - 08.29.22.xlsx", 
@@ -192,6 +195,8 @@ open_order %>%
                    open_order_cases = sum(open_order_cases)) %>% 
   dplyr::mutate(open_order_net_lbs = replace(open_order_net_lbs, is.na(open_order_net_lbs), 0),
                 open_order_cases = replace(open_order_cases, is.na(open_order_cases), 0)) -> open_order_pivot
+
+
 
 
 # Sku Actual Shipped (make sure with your date range)
@@ -389,5 +394,4 @@ colnames(oil_comsumption_comparison_final)[25] <- "Diff (Forecasted - Original S
 
 
 writexl::write_xlsx(oil_comsumption_comparison_final, "oil_consumption_comparison.xlsx")
-
 
