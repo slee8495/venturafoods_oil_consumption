@@ -266,7 +266,9 @@ sales_orders[-1:-3, ] %>%
 
 sales_orders %>% 
   dplyr::group_by(mfg_ref) %>% 
-  dplyr::summarise(original_order_qty = sum(original_order_qty)) -> sales_orders_pivot
+  dplyr::summarise(original_order_qty = sum(original_order_qty)) %>% 
+  dplyr::mutate(original_order_qty = ifelse(original_order_qty < 0, 0, original_order_qty)) -> sales_orders_pivot
+
 
 
 oil_comsumption_comparison %>% 
@@ -281,7 +283,9 @@ oil_comsumption_comparison %>%
 
 ################################################ second phase #######################################
 bom %>% 
-  dplyr::select(sku, component, quantity_w_scrap) -> bom_2
+  dplyr::select(mfg_ref, component, quantity_w_scrap) -> bom_2
+
+
 
 oil_comsumption_comparison %>% 
   dplyr::left_join(bom_2) -> oil_comsumption_comparison_ver2
