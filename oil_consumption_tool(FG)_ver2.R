@@ -200,30 +200,25 @@ open_order %>%
 
 
 # Sku Actual Shipped (make sure with your date range)
-# https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/BBAA886ACF43D82757EE568F91EEB679/K53--K46
+# https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/88A31CA8184AD038FB69CD95920E4C61/W70--K46
 
 ## sku_actual ----
-sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/9.2022 test/Sku Actual Shipped (8).xlsx")
+sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/9.2022 test/Order and Shipped History - Month (2).xlsx")
 
-sku_actual[-1, ] -> sku_actual
+sku_actual[c(-1, -2, -4), ] -> sku_actual
 colnames(sku_actual) <- sku_actual[1, ]
 sku_actual[-1, ] -> sku_actual
 
 sku_actual %>% 
   janitor::clean_names() %>% 
-  readr::type_convert() %>% 
-  dplyr::rename(location_name = na,
-                mfg_loc = product_manufacturing_location,
-                mfg_loc_name = na_2,
-                component = base_product,
-                description = na_3,
-                sku = product_label_sku,
-                category = na_5,
+  readr::type_convert() %>%
+  data.frame() %>% 
+  dplyr::rename(mfg_loc = na_3,
+                sku = na_4,
                 actual_shipped_cases = cases,
                 actual_shipped_lbs = net_pounds_lbs) %>% 
-  dplyr::select(sku, location, mfg_loc, actual_shipped_lbs, actual_shipped_cases) %>% 
+  dplyr::select(sku, mfg_loc, actual_shipped_lbs, actual_shipped_cases) %>% 
   dplyr::mutate(sku = gsub("-", "", sku),
-                ref = paste0(location, "_", sku),
                 mfg_ref = paste0(mfg_loc, "_", sku)) -> sku_actual
 
 sku_actual %>% 
@@ -340,6 +335,10 @@ oil_comsumption_comparison_ver2 %>%
   dplyr::mutate(bulk = ifelse(is.na(bulk), "N", bulk)) -> oil_comsumption_comparison_ver2
 
 
+
+
+# Duplicated values delete
+oil_comsumption_comparison_ver2[!duplicated(oil_comsumption_comparison_ver2[,c("mfg_ref", "sku", "component", "quantity_w_scrap")]),] -> oil_comsumption_comparison_ver2
 
 
 
