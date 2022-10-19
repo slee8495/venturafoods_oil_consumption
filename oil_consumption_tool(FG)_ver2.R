@@ -200,7 +200,7 @@ open_order %>%
 
 
 # Sku Actual Shipped (make sure with your date range)
-# https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/88A31CA8184AD038FB69CD95920E4C61/W70--K46
+# https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
 
 ## sku_actual ----
 sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/9.2022 test/Order and Shipped History - Month (2).xlsx")
@@ -247,7 +247,7 @@ forecast_with_oil %>%
 
 ################################################# Sales Orders ##################################################
 # Input sales orders ----
-# https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/88A31CA8184AD038FB69CD95920E4C61/K53--K46
+# https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
 
 sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/9.2022 test/Order and Shipped History - Month (1).xlsx")
 
