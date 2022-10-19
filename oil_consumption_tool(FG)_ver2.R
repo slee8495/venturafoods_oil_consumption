@@ -213,7 +213,7 @@ sku_actual %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>%
   data.frame() %>% 
-  dplyr::rename(mfg_loc = na_3,
+  dplyr::rename(mfg_loc = na_2,
                 sku = na_4,
                 actual_shipped_cases = cases,
                 actual_shipped_lbs = net_pounds_lbs) %>% 
