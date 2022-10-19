@@ -203,18 +203,14 @@ open_order %>%
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
 
 ## sku_actual ----
-sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/9.2022 test/Order and Shipped History - Month (2).xlsx")
+sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Components Consumption/shipped.xlsx")
 
-sku_actual[c(-1, -2, -4), ] -> sku_actual
-colnames(sku_actual) <- sku_actual[1, ]
-sku_actual[-1, ] -> sku_actual
 
 sku_actual %>% 
   janitor::clean_names() %>% 
   readr::type_convert() %>%
-  data.frame() %>% 
-  dplyr::rename(mfg_loc = na_2,
-                sku = na_4,
+  dplyr::rename(mfg_loc = product_manufacturing_location,
+                sku = product_label_sku,
                 actual_shipped_cases = cases,
                 actual_shipped_lbs = net_pounds_lbs) %>% 
   dplyr::select(sku, mfg_loc, actual_shipped_lbs, actual_shipped_cases) %>% 
@@ -249,15 +245,14 @@ forecast_with_oil %>%
 # Input sales orders ----
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
 
-sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/9.2022 test/Order and Shipped History - Month (1).xlsx")
+sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Components Consumption/ordered.xlsx")
 
-sales_orders[-1:-3, ] %>% 
-  dplyr::rename(location = "Visualization 1",
-                mfg_loc = "...2",
-                sku = "...4",
-                description = "...5",
-                original_order_qty = "...6") %>% 
-  dplyr::select(-"...3") %>% 
+sales_orders %>% 
+  janitor::clean_names() %>% 
+  dplyr::rename(mfg_loc = product_manufacturing_location,
+                sku = product_label_sku,
+                description = x6,
+                original_order_qty = ordered_original_qty) %>% 
   dplyr::mutate(original_order_qty = replace(original_order_qty, is.na(original_order_qty), 0),
                 sku = gsub("-", "", sku),
                 mfg_ref = paste0(mfg_loc, "_", sku)) %>% 
