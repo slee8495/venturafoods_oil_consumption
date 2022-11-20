@@ -46,7 +46,7 @@ dsx %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
