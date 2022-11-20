@@ -19,7 +19,7 @@ oil_list %>%
 
 # Bulk Oil List ----
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/A00AF850E84EC6F52CFD9DABD1742F03/K53--K46
-bulk_oil_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/9.2022 test/Bulk Oil Table (2).xlsx")
+bulk_oil_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Oct.2022 Report/Bulk Oil Table (3).xlsx")
 
 bulk_oil_list %>% 
   janitor::clean_names() %>% 
