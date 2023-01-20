@@ -631,7 +631,12 @@ rbind(forecast_1, forecast_2, forecast_3, forecast_4, forecast_5, forecast_6, fo
       forecast_11, forecast_12) -> forecast
 
 
-rm(dsx_1, dsx_2, dsx_3, dsx_4, dsx_5, dsx_6, dsx_7, dsx_8, dsx_9, dsx_10, dsx_11, dsx_12, forecast_1)
+rm(dsx_1, dsx_2, dsx_3, dsx_4, dsx_5, dsx_6, dsx_7, dsx_8, dsx_9, dsx_10, dsx_11, dsx_12, 
+   forecast_1, forecast_2, forecast_3, forecast_4, forecast_5, forecast_6, forecast_7, forecast_8, forecast_9, forecast_10,
+   forecast_11, forecast_12,
+   forecast_month_year_code_1, forecast_month_year_code_2, forecast_month_year_code_3, forecast_month_year_code_4,
+   forecast_month_year_code_5, forecast_month_year_code_6, forecast_month_year_code_7, forecast_month_year_code_8,
+   forecast_month_year_code_9, forecast_month_year_code_10, forecast_month_year_code_11, forecast_month_year_code_12)
 
 
 # Oil List ----
