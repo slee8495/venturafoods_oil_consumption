@@ -631,6 +631,14 @@ rbind(forecast_1, forecast_2, forecast_3, forecast_4, forecast_5, forecast_6, fo
       forecast_11, forecast_12) -> forecast
 
 
+forecast %>%
+  dplyr::mutate(year = as.double(year),
+                month = as.double(month),
+                date_ref = paste0(year, "_", month, "_", mfg_loc, "_", sku)) %>% 
+  dplyr::relocate(date_ref) -> forecast
+
+
+
 rm(dsx_1, dsx_2, dsx_3, dsx_4, dsx_5, dsx_6, dsx_7, dsx_8, dsx_9, dsx_10, dsx_11, dsx_12, 
    forecast_1, forecast_2, forecast_3, forecast_4, forecast_5, forecast_6, forecast_7, forecast_8, forecast_9, forecast_10,
    forecast_11, forecast_12,
@@ -671,7 +679,7 @@ bulk_oil_list %>%
 
 
 # BoM RM to sku ----
-rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/IQR archive/Raw Material Inventory Health (IQR) - 11.02.22.xlsx", 
+rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 01.18.23.xlsx", 
                         sheet = "RM to SKU")
 
 rm_to_sku %>% 
@@ -717,7 +725,10 @@ oil_included_sku_2[-which(duplicated(oil_included_sku_2$sku)),] -> oil_included_
 forecast %>% 
   dplyr::left_join(oil_included_sku_2) %>% 
   dplyr::filter(!is.na(oil_included)) %>% 
-  dplyr::select(-oil_included) -> forecast_with_oil
+  dplyr::select(-oil_included) %>% 
+  dplyr::mutate(year = as.double(year),
+                month = as.double(month),
+                date_ref = paste0(year, "_", month, "_", mfg_loc, "_", sku))-> forecast_with_oil
 
 
 
@@ -812,10 +823,12 @@ sku_actual %>%
                 month = calendar_month_no) %>% 
   dplyr::select(year, month, sku, mfg_loc, actual_shipped_lbs, actual_shipped_cases) %>% 
   dplyr::mutate(sku = gsub("-", "", sku),
-                mfg_ref = paste0(mfg_loc, "_", sku)) -> sku_actual
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                date_ref = paste0(year, "_", month, "_", mfg_ref, "_", sku)) %>% 
+  dplyr::relocate(date_ref)-> sku_actual
 
 sku_actual %>% 
-  dplyr::group_by(year, month, mfg_ref) %>% 
+  dplyr::group_by(date_ref, mfg_ref) %>% 
   dplyr::summarise(actual_shipped_lbs = sum(actual_shipped_lbs),
                    actual_shipped_cases = sum(actual_shipped_cases)) %>% 
   dplyr::mutate(actual_shipped_lbs = replace(actual_shipped_lbs, is.na(actual_shipped_lbs), 0),
@@ -826,7 +839,7 @@ sku_actual %>%
 
 forecast_with_oil %>% 
   dplyr::left_join(open_order_pivot, by = "mfg_ref") %>% 
-  dplyr::left_join(sku_actual_pivot, by = "mfg_ref") %>% 
+  dplyr::left_join(sku_actual_pivot, by = "date_ref") %>% 
   dplyr::mutate(open_order_cases = replace(open_order_cases, is.na(open_order_cases), 0),
                 actual_shipped_cases = replace(actual_shipped_cases, is.na(actual_shipped_cases), 0)) %>% 
   dplyr::mutate(open_order_net_lbs = replace(open_order_net_lbs, is.na(open_order_net_lbs), 0),
@@ -842,7 +855,7 @@ forecast_with_oil %>%
 # Input sales orders ----
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
 
-sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/Jan.2023/Order and Shipped History (11).xlsx")
+sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/Jan.2023/Order and Shipped History (12).xlsx")
 
 sales_orders %>% 
   janitor::clean_names() %>% 
@@ -856,12 +869,14 @@ sales_orders %>%
   dplyr::mutate(order_qty_final = replace(order_qty_final, is.na(order_qty_final), 0),
                 order_qty_original = replace(order_qty_original, is.na(order_qty_original), 0),
                 sku = gsub("-", "", sku),
-                mfg_ref = paste0(mfg_loc, "_", sku)) %>% 
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                date_ref = paste0(year, "_", month, "_", mfg_loc, "_", sku)) %>%
+  dplyr::relocate(date_ref) %>% 
   readr::type_convert() -> sales_orders
 
 
 sales_orders %>% 
-  dplyr::group_by(year, month, mfg_ref) %>% 
+  dplyr::group_by(date_ref, mfg_ref) %>% 
   dplyr::summarise(order_qty_final = sum(order_qty_final),
                    order_qty_original = sum(order_qty_original)) %>% 
   dplyr::mutate(order_qty_final = ifelse(order_qty_final < 0, 0, order_qty_final),
@@ -870,7 +885,7 @@ sales_orders %>%
 
 
 oil_comsumption_comparison %>% 
-  dplyr::left_join(sales_orders_pivot, by = "mfg_ref") -> oil_comsumption_comparison
+  dplyr::left_join(sales_orders_pivot, by = "date_ref") -> oil_comsumption_comparison
 
 
 # NA to 0
@@ -966,14 +981,14 @@ oil_comsumption_comparison_ver2 %>%
 oil_comsumption_comparison_final <- oil_comsumption_comparison_ver2
 
 oil_comsumption_comparison_final %>% 
-  dplyr::select(mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, component, oil_description, bulk,
+  dplyr::select(year, month, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, component, oil_description, bulk,
                 quantity_w_scrap, adjusted_forecast_cases, forecasted_oil_qty, 
                 open_order_cases, actual_shipped_cases, open_order_actual_shipped_cases, 
                 consumption_qty_actual_shipped, consumption_percent_adjusted_actual_shipped,
                 diff_between_forecast_actual, order_qty_final, order_qty_original, consumption_qty_sales_order_qty, 
                 consumption_percent_adjusted_sales_order, diff_between_forecast_original) -> oil_comsumption_comparison_final
 
-
+unique(oil_comsumption_comparison_final$month)
 str(oil_comsumption_comparison_final)
 
 colnames(oil_comsumption_comparison_final)[1] <- "mfg ref"
@@ -1009,7 +1024,4 @@ writexl::write_xlsx(oil_comsumption_comparison_final, "oil_consumption_compariso
 
 
 
-
-# I found the way!!!
-# First, I need to create a mega file.. by repeating 12 times. 
 
