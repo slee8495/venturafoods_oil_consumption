@@ -650,8 +650,6 @@ rm(dsx_1, dsx_2, dsx_3, dsx_4, dsx_5, dsx_6, dsx_7, dsx_8, dsx_9, dsx_10, dsx_11
 ##################################################################################################################
 
 
-
-
 # Oil List ----
 oil_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Oil types AS400 JDE.xlsx")
 
@@ -768,42 +766,42 @@ bom %>%
 
 
 ## open orders ----
-open_order <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/Jan.2023/Open Orders - 1 Month (18).xlsx")
-
-open_order[-1, ] -> open_order
-colnames(open_order) <- open_order[1, ]
-open_order[-1, ] -> open_order
-
-open_order %>% 
-  janitor::clean_names() %>% 
-  readr::type_convert() %>% 
-  dplyr::rename(location_name = na,
-                mfg_loc = product_manufacturing_location,
-                mfg_loc_name = na_2,
-                component = base_product,
-                sku = product_label_sku,
-                description = na_3,
-                category = na_4,
-                category_no = product_category,
-                open_order_net_lbs = oo_net_pounds_lbs,
-                open_order_cases = oo_cases) %>% 
-  dplyr::mutate(sales_order_requested_ship_date = as.Date(sales_order_requested_ship_date, origin = "1899-12-30"),
-                open_order_cases = replace(open_order_cases, is.na(open_order_cases), 0),
-                sku = gsub("-", "", sku), 
-                ref = paste0(location, "_", sku),
-                mfg_ref = paste0(mfg_loc, "_", sku)) %>%
-  dplyr::relocate(ref, mfg_ref) %>%
-  dplyr::relocate(mfg_loc, .after = location) -> open_order
-
-open_order %>% 
-  dplyr::group_by(mfg_ref) %>% 
-  dplyr::summarise(open_order_net_lbs = sum(open_order_net_lbs),
-                   open_order_cases = sum(open_order_cases)) %>% 
-  dplyr::mutate(open_order_net_lbs = replace(open_order_net_lbs, is.na(open_order_net_lbs), 0),
-                open_order_cases = replace(open_order_cases, is.na(open_order_cases), 0)) -> open_order_pivot
-
-
-
+# open_order <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/Jan.2023/Open Orders - 1 Month (18).xlsx")
+# 
+# open_order[-1, ] -> open_order
+# colnames(open_order) <- open_order[1, ]
+# open_order[-1, ] -> open_order
+# 
+# open_order %>% 
+#   janitor::clean_names() %>% 
+#   readr::type_convert() %>% 
+#   dplyr::rename(location_name = na,
+#                 mfg_loc = product_manufacturing_location,
+#                 mfg_loc_name = na_2,
+#                 component = base_product,
+#                 sku = product_label_sku,
+#                 description = na_3,
+#                 category = na_4,
+#                 category_no = product_category,
+#                 open_order_net_lbs = oo_net_pounds_lbs,
+#                 open_order_cases = oo_cases) %>% 
+#   dplyr::mutate(sales_order_requested_ship_date = as.Date(sales_order_requested_ship_date, origin = "1899-12-30"),
+#                 open_order_cases = replace(open_order_cases, is.na(open_order_cases), 0),
+#                 sku = gsub("-", "", sku), 
+#                 ref = paste0(location, "_", sku),
+#                 mfg_ref = paste0(mfg_loc, "_", sku)) %>%
+#   dplyr::relocate(ref, mfg_ref) %>%
+#   dplyr::relocate(mfg_loc, .after = location) -> open_order
+# 
+# open_order %>% 
+#   dplyr::group_by(mfg_ref) %>% 
+#   dplyr::summarise(open_order_net_lbs = sum(open_order_net_lbs),
+#                    open_order_cases = sum(open_order_cases)) %>% 
+#   dplyr::mutate(open_order_net_lbs = replace(open_order_net_lbs, is.na(open_order_net_lbs), 0),
+#                 open_order_cases = replace(open_order_cases, is.na(open_order_cases), 0)) -> open_order_pivot
+# 
+# 
+# 
 
 # Sku Actual Shipped (make sure with your date range)
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
@@ -838,14 +836,9 @@ sku_actual %>%
 # combine with dsx_with_oil x open_order
 
 forecast_with_oil %>% 
-  dplyr::left_join(open_order_pivot, by = "mfg_ref") %>% 
   dplyr::left_join(sku_actual_pivot, by = "date_ref") %>% 
-  dplyr::mutate(open_order_cases = replace(open_order_cases, is.na(open_order_cases), 0),
-                actual_shipped_cases = replace(actual_shipped_cases, is.na(actual_shipped_cases), 0)) %>% 
-  dplyr::mutate(open_order_net_lbs = replace(open_order_net_lbs, is.na(open_order_net_lbs), 0),
-                actual_shipped_lbs = replace(actual_shipped_lbs, is.na(actual_shipped_lbs), 0),
-                open_order_actual_shipped_lbs = open_order_net_lbs + actual_shipped_lbs,
-                open_order_actual_shipped_cases = open_order_cases + actual_shipped_cases,
+  dplyr::mutate(actual_shipped_cases = replace(actual_shipped_cases, is.na(actual_shipped_cases), 0)) %>% 
+  dplyr::mutate(actual_shipped_lbs = replace(actual_shipped_lbs, is.na(actual_shipped_lbs), 0),
                 adjusted_forecast_pounds_lbs = round(adjusted_forecast_pounds_lbs, 0)) %>% 
   dplyr::select(-mfg_ref.y) %>% 
   dplyr::rename(mfg_ref = mfg_ref.x) -> oil_comsumption_comparison
@@ -857,7 +850,7 @@ forecast_with_oil %>%
 # Input sales orders ----
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
 
-sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/Jan.2023/Order and Shipped History (12).xlsx")
+sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/Jan.2023/Order and Shipped History (13).xlsx")
 
 sales_orders %>% 
   janitor::clean_names() %>% 
@@ -912,7 +905,7 @@ oil_comsumption_comparison %>%
 
 oil_comsumption_comparison_ver2 %>% 
   dplyr::mutate(forecasted_oil_qty = adjusted_forecast_cases * quantity_w_scrap,
-                consumption_qty_actual_shipped = open_order_actual_shipped_cases * quantity_w_scrap,
+                consumption_qty_actual_shipped = actual_shipped_cases * quantity_w_scrap,
                 consumption_percent_adjusted_actual_shipped = consumption_qty_actual_shipped / forecasted_oil_qty) %>%
   
   dplyr::mutate(consumption_qty_sales_order_qty = order_qty_final * quantity_w_scrap,
@@ -988,7 +981,7 @@ oil_comsumption_comparison_final <- oil_comsumption_comparison_ver2
 oil_comsumption_comparison_final %>% 
   dplyr::select(year, month, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, component, oil_description, bulk,
                 quantity_w_scrap, adjusted_forecast_cases, forecasted_oil_qty, 
-                open_order_cases, actual_shipped_cases, open_order_actual_shipped_cases, 
+                actual_shipped_cases, 
                 consumption_qty_actual_shipped, consumption_percent_adjusted_actual_shipped,
                 diff_between_forecast_actual, order_qty_final, order_qty_original, consumption_qty_sales_order_qty, 
                 consumption_percent_adjusted_sales_order, diff_between_forecast_original) -> oil_comsumption_comparison_final
@@ -1013,17 +1006,15 @@ colnames(oil_comsumption_comparison_final)[14] <- "Bulk?"
 colnames(oil_comsumption_comparison_final)[15] <- "Quantity w/Scrap"
 colnames(oil_comsumption_comparison_final)[16] <- "Adjusted Forecast Cases"
 colnames(oil_comsumption_comparison_final)[17] <- "Forecasted Oil Qty"
-colnames(oil_comsumption_comparison_final)[18] <- "Open Order Cases"
-colnames(oil_comsumption_comparison_final)[19] <- "Actual Shipped Cases"
-colnames(oil_comsumption_comparison_final)[20] <- "Open Order Cases + Actual Shipped Cases"
-colnames(oil_comsumption_comparison_final)[21] <- "Consumption Quantity (Open Order + Actual Shipped)"
-colnames(oil_comsumption_comparison_final)[22] <- "Consumption % (by Adjusted forecast - Open Order + Actual Shipped)"
-colnames(oil_comsumption_comparison_final)[23] <- "Diff (Forecasted - Actual Shipped)"
-colnames(oil_comsumption_comparison_final)[24] <- "Sales Order Qty Final (Cases)"
-colnames(oil_comsumption_comparison_final)[25] <- "Sales Order Qty Original (Cases)"
-colnames(oil_comsumption_comparison_final)[26] <- "Consumption Quantity (Original Sales Order Qty)"
-colnames(oil_comsumption_comparison_final)[27] <- "Consumption % (by Adjusted forecast - Original Sales Order Qty)"
-colnames(oil_comsumption_comparison_final)[28] <- "Diff (Forecasted - Original Sales Order)"
+colnames(oil_comsumption_comparison_final)[18] <- "Actual Shipped Cases"
+colnames(oil_comsumption_comparison_final)[19] <- "Consumption Quantity (Actual Shipped)"
+colnames(oil_comsumption_comparison_final)[20] <- "Consumption % (by Adjusted forecast - Actual Shipped)"
+colnames(oil_comsumption_comparison_final)[21] <- "Diff (Forecasted - Actual Shipped)"
+colnames(oil_comsumption_comparison_final)[22] <- "Sales Order Qty Final (Cases)"
+colnames(oil_comsumption_comparison_final)[23] <- "Sales Order Qty Original (Cases)"
+colnames(oil_comsumption_comparison_final)[24] <- "Consumption Quantity (Original Sales Order Qty)"
+colnames(oil_comsumption_comparison_final)[25] <- "Consumption % (by Adjusted forecast - Original Sales Order Qty)"
+colnames(oil_comsumption_comparison_final)[26] <- "Diff (Forecasted - Original Sales Order)"
 
 
 writexl::write_xlsx(oil_comsumption_comparison_final, "oil_consumption_comparison.xlsx")
