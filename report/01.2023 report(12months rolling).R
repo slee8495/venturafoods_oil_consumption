@@ -13,18 +13,18 @@ library(lubridate)
 ######################################################### DSX List ######################################################
 #########################################################################################################################
 
-dsx_1 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.01.03.xlsx")
-dsx_2 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.02.01.xlsx")
-dsx_3 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.03.15.xlsx")
-dsx_4 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.04.01.xlsx")
-dsx_5 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.05.02.xlsx")
-dsx_6 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.06.01.xlsx")
-dsx_7 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.07.05.xlsx")
-dsx_8 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.08.01.xlsx")
-dsx_9 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.09.02.xlsx")
-dsx_10 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.10.03.xlsx")
-dsx_11 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.11.01.xlsx")
-dsx_12 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.12.01.xlsx")
+dsx_1 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2021/DSX Forecast Backup - 2021.12.03.xlsx")
+dsx_2 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.01.03.xlsx")
+dsx_3 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.02.02.xlsx")
+dsx_4 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.03.15.xlsx")
+dsx_5 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.04.04.xlsx")
+dsx_6 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.05.02.xlsx")
+dsx_7 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.06.02.xlsx")
+dsx_8 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.07.05.xlsx")
+dsx_9 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.08.02.xlsx")
+dsx_10 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.09.02.xlsx")
+dsx_11 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.10.03.xlsx")
+dsx_12 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.11.02.xlsx")
 
 
 
@@ -639,12 +639,12 @@ forecast %>%
 
 
 
-rm(dsx_1, dsx_2, dsx_3, dsx_4, dsx_5, dsx_6, dsx_7, dsx_8, dsx_9, dsx_10, dsx_11, dsx_12, 
-   forecast_1, forecast_2, forecast_3, forecast_4, forecast_5, forecast_6, forecast_7, forecast_8, forecast_9, forecast_10,
-   forecast_11, forecast_12,
-   forecast_month_year_code_1, forecast_month_year_code_2, forecast_month_year_code_3, forecast_month_year_code_4,
-   forecast_month_year_code_5, forecast_month_year_code_6, forecast_month_year_code_7, forecast_month_year_code_8,
-   forecast_month_year_code_9, forecast_month_year_code_10, forecast_month_year_code_11, forecast_month_year_code_12)
+# rm(dsx_1, dsx_2, dsx_3, dsx_4, dsx_5, dsx_6, dsx_7, dsx_8, dsx_9, dsx_10, dsx_11, dsx_12, 
+#    forecast_1, forecast_2, forecast_3, forecast_4, forecast_5, forecast_6, forecast_7, forecast_8, forecast_9, forecast_10,
+#    forecast_11, forecast_12,
+#    forecast_month_year_code_1, forecast_month_year_code_2, forecast_month_year_code_3, forecast_month_year_code_4,
+#    forecast_month_year_code_5, forecast_month_year_code_6, forecast_month_year_code_7, forecast_month_year_code_8,
+#    forecast_month_year_code_9, forecast_month_year_code_10, forecast_month_year_code_11, forecast_month_year_code_12)
 
 
 ##################################################################################################################
@@ -677,7 +677,7 @@ bulk_oil_list %>%
 
 
 # BoM RM to sku ----
-rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 01.18.23.xlsx", 
+rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 02.01.23.xlsx", 
                         sheet = "RM to SKU")
 
 rm_to_sku %>% 
@@ -807,7 +807,7 @@ bom %>%
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
 
 ## sku_actual ----
-sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/Jan.2023/Order and Shipped History (10).xlsx")
+sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/Jan.2023/Order and Shipped History (16).xlsx")
 
 
 sku_actual %>% 
@@ -836,12 +836,10 @@ sku_actual %>%
 # combine with dsx_with_oil x open_order
 
 forecast_with_oil %>% 
-  dplyr::left_join(sku_actual_pivot, by = "date_ref") %>% 
+  dplyr::left_join(sku_actual_pivot %>% select(-mfg_ref), by = "date_ref") %>% 
   dplyr::mutate(actual_shipped_cases = replace(actual_shipped_cases, is.na(actual_shipped_cases), 0)) %>% 
   dplyr::mutate(actual_shipped_lbs = replace(actual_shipped_lbs, is.na(actual_shipped_lbs), 0),
-                adjusted_forecast_pounds_lbs = round(adjusted_forecast_pounds_lbs, 0)) %>% 
-  dplyr::select(-mfg_ref.y) %>% 
-  dplyr::rename(mfg_ref = mfg_ref.x) -> oil_comsumption_comparison
+                adjusted_forecast_pounds_lbs = round(adjusted_forecast_pounds_lbs, 0)) -> oil_comsumption_comparison
 
 
 
@@ -850,7 +848,7 @@ forecast_with_oil %>%
 # Input sales orders ----
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
 
-sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/Jan.2023/Order and Shipped History (13).xlsx")
+sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/Jan.2023/Order and Shipped History (17).xlsx")
 
 sales_orders %>% 
   janitor::clean_names() %>% 
@@ -880,15 +878,13 @@ sales_orders %>%
 
 
 oil_comsumption_comparison %>% 
-  dplyr::left_join(sales_orders_pivot, by = "date_ref") -> oil_comsumption_comparison
+  dplyr::left_join(sales_orders_pivot %>% select(-mfg_ref), by = "date_ref") -> oil_comsumption_comparison
 
 
 # NA to 0
 oil_comsumption_comparison %>% 
   dplyr::mutate(order_qty_final = replace(order_qty_final, is.na(order_qty_final), 0),
-                order_qty_original = replace(order_qty_original, is.na(order_qty_original), 0)) %>% 
-  dplyr::rename(mfg_ref = mfg_ref.x) %>% 
-  dplyr::select(-mfg_ref.y)-> oil_comsumption_comparison
+                order_qty_original = replace(order_qty_original, is.na(order_qty_original), 0)) ->  oil_comsumption_comparison
 
 
 
@@ -1020,5 +1016,16 @@ colnames(oil_comsumption_comparison_final)[26] <- "Diff (Forecasted - Original S
 writexl::write_xlsx(oil_comsumption_comparison_final, "oil_consumption_comparison.xlsx")
 
 
+sku_actual_pivot$date_ref %>% data.frame() %>% rename(date_ref = ".") %>% filter(date_ref == "2022_1_75_10213HOL")
+sku_actual_pivot %>% filter(date_ref == "2022_1_75_10213HOL")
 
+forecast_with_oil %>% filter(date_ref == "2022_1_36_10128COS")
+
+
+
+forecast_2 %>% mutate(date_ref = paste0(year, "_", month, "_", mfg_loc, "_", sku)) %>% 
+  filter(date_ref == "2022_01_36_10128COS")
+
+
+# DSX Forecast is not bringing the info. 
 
