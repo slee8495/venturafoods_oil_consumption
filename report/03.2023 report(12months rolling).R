@@ -980,10 +980,10 @@ oil_comsumption_comparison_final %>%
                 actual_shipped_cases, 
                 consumption_qty_actual_shipped, consumption_percent_adjusted_actual_shipped,
                 diff_between_forecast_actual, order_qty_final, order_qty_original, consumption_qty_sales_order_qty, 
-                consumption_percent_adjusted_sales_order, diff_between_forecast_original) -> oil_comsumption_comparison_final
+                consumption_percent_adjusted_sales_order, diff_between_forecast_original) %>% 
+  dplyr::arrange(year, month, mfg_loc, sku) -> oil_comsumption_comparison_final
 
-unique(oil_comsumption_comparison_final$month)
-str(oil_comsumption_comparison_final)
+
 
 colnames(oil_comsumption_comparison_final)[1] <- "Year"
 colnames(oil_comsumption_comparison_final)[2] <- "Month"
@@ -1015,5 +1015,45 @@ colnames(oil_comsumption_comparison_final)[26] <- "Diff (Forecasted - Original S
 
 writexl::write_xlsx(oil_comsumption_comparison_final, "oil_consumption_comparison.xlsx")
 
+
+
+
+
+
+
+#######################################################################################################################
+#######################################################################################################################
+#######################################################################################################################
+
+
+forecast_with_oil %>% 
+  dplyr::select(date_ref) -> f_1
+
+
+
+# Take out oil skus only from sales order
+sales_orders_pivot %>% 
+  tidyr::separate(mfg_ref, c("mfg_loc", "sku"), sep = "_") %>% 
+  dplyr::left_join(oil_included_sku_2) %>% 
+  dplyr::filter(!is.na(oil_included)) %>% 
+  dplyr::select(date_ref) -> s_1
+
+
+
+dplyr::intersect(f_1, s_1) %>% 
+  dplyr::mutate(both = "both exist") -> i_1
+
+
+s_1 %>% 
+  dplyr::left_join(i_1) %>% 
+  dplyr::filter(is.na(both)) %>% 
+  dplyr::select(date_ref) %>% 
+  tidyr::separate(date_ref, c("year", "month", "mfg_loc", "sku"), sep = "_") %>% 
+  dplyr::mutate(ref = paste0(mfg_loc, "-", sku)) %>% 
+  dplyr::relocate(ref, mfg_loc, sku, year, month) %>% 
+  dplyr::arrange(year, month, mfg_loc, sku) -> identitied_skus_not_existing
+
+
+writexl::write_xlsx(identitied_skus_not_existing, "Identitied skus not existing.xlsx")
 
 
