@@ -677,7 +677,7 @@ bulk_oil_list %>%
 
 
 # BoM RM to sku ----
-rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 03.01.23.xlsx", 
+rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 03.29.23.xlsx", 
                         sheet = "RM to SKU")
 
 rm_to_sku %>% 
@@ -732,7 +732,7 @@ forecast %>%
 
 
 # BoM Report ----
-bom <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 03.01.23.xlsx", 
+bom <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 03.29.23.xlsx", 
                   sheet = "BoM")
 
 bom[-1:-5, ] -> bom
