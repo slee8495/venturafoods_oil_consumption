@@ -1116,10 +1116,10 @@ identitied_skus_not_existing %>%
                   actual_shipped_cases, 
                   consumption_qty_actual_shipped, consumption_percent_adjusted_actual_shipped,
                   diff_between_forecast_actual, order_qty_final, order_qty_original, consumption_qty_sales_order_qty, 
-                  consumption_percent_adjusted_sales_order, diff_between_forecast_original) -> identitied_skus_not_existing_2
+                  consumption_percent_adjusted_sales_order, diff_between_forecast_original) %>% 
+  dplyr::arrange(year, month, mfg_loc, sku) -> identitied_skus_not_existing_2
   
   
-
 
   
 #######################################################################################################################
