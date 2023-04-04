@@ -1131,6 +1131,13 @@ identitied_skus_not_existing %>%
 ################################################# Final Paper #########################################################
 #######################################################################################################################
 
+oil_comsumption_comparison_final %>% 
+  dplyr::mutate(dsx = "Y") -> oil_comsumption_comparison_final
+
+
+identitied_skus_not_existing_2 %>% 
+  dplyr::mutate(dsx = "N") -> identitied_skus_not_existing_2
+
 rbind(oil_comsumption_comparison_final, identitied_skus_not_existing_2) -> final_paper
 
 
