@@ -37,6 +37,10 @@ rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Repo
 bom <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 03.29.23.xlsx", 
                   sheet = "BoM")
 
+# Bulk Oil List ----
+# https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/A00AF850E84EC6F52CFD9DABD1742F03/K53--K46
+bulk_oil_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Oct.2022 Report/Bulk Oil Table (3).xlsx")
+
 ## sku_actual (Make sure in the MSTR if months info input correct) 
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
 sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/Mar.2023/Order and Shipped History (20).xlsx")
@@ -1098,8 +1102,6 @@ identitied_skus_not_existing %>%
   dplyr::left_join(completed_sku_list) %>% 
   dplyr::mutate(group_no = "n/a",
                 group = "n/a",
-                oil_description = "n/a",
-                bulk = "n/a",
                 adjusted_forecast_cases = 0,
                 forecasted_oil_qty = 0,
                 consumption_percent_adjusted_actual_shipped = "n/a",
@@ -1110,6 +1112,9 @@ identitied_skus_not_existing %>%
   dplyr::left_join(sku_actual_for_missing_sku) %>% 
   dplyr::mutate(consumption_qty_actual_shipped = actual_shipped_cases * quantity_w_scrap) %>% 
   dplyr::left_join(sales_orders_for_missing_sku_2) %>% 
+  dplyr::left_join(oil_desc) %>%
+  dplyr::left_join(bulk_oil_list_merge) %>% 
+  dplyr::mutate(bulk = ifelse(is.na(bulk), "N", bulk)) %>% 
   dplyr::mutate(consumption_qty_sales_order_qty = order_qty_final * quantity_w_scrap) %>% 
   dplyr::select(year, month, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, component, oil_description, bulk,
                   quantity_w_scrap, adjusted_forecast_cases, forecasted_oil_qty, 
