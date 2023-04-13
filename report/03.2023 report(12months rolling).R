@@ -30,7 +30,7 @@ dsx_12 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Plann
 ######################################################### Other List ######################################################
 
 # BoM RM to sku 
-rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 03.29.23.xlsx", 
+rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/IQR archive/Raw Material Inventory Health (IQR) - 03.29.23.xlsx", 
                         sheet = "RM to SKU")
 
 # BoM Report 
