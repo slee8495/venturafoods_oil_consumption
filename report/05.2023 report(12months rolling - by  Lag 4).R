@@ -1083,9 +1083,6 @@ forecast_lag_1_1 %>%
 
 
 # DSX - 1
-dsx_1[-1, ] -> dsx_1
-colnames(dsx_1) <- dsx_1[1, ]
-dsx_1[-1, ] -> dsx_1
 
 dsx_1 %>% 
   janitor::clean_names() %>% 
@@ -1131,9 +1128,6 @@ forecast_1_1 %>%
 
 
 # DSX - 2
-dsx_2[-1, ] -> dsx_2
-colnames(dsx_2) <- dsx_2[1, ]
-dsx_2[-1, ] -> dsx_2
 
 dsx_2 %>% 
   janitor::clean_names() %>% 
@@ -1179,9 +1173,6 @@ forecast_2_1 %>%
 
 
 # DSX - 3
-dsx_3[-1, ] -> dsx_3
-colnames(dsx_3) <- dsx_3[1, ]
-dsx_3[-1, ] -> dsx_3
 
 dsx_3 %>% 
   janitor::clean_names() %>% 
@@ -1228,9 +1219,6 @@ forecast_3_1 %>%
 
 
 # DSX - 4
-dsx_4[-1, ] -> dsx_4
-colnames(dsx_4) <- dsx_4[1, ]
-dsx_4[-1, ] -> dsx_4
 
 dsx_4 %>% 
   janitor::clean_names() %>% 
@@ -1277,9 +1265,6 @@ forecast_4_1 %>%
 
 
 # DSX - 5
-dsx_5[-1, ] -> dsx_5
-colnames(dsx_5) <- dsx_5[1, ]
-dsx_5[-1, ] -> dsx_5
 
 dsx_5 %>% 
   janitor::clean_names() %>% 
@@ -1327,9 +1312,6 @@ forecast_5_1 %>%
 
 
 # DSX - 6
-dsx_6[-1, ] -> dsx_6
-colnames(dsx_6) <- dsx_6[1, ]
-dsx_6[-1, ] -> dsx_6
 
 dsx_6 %>% 
   janitor::clean_names() %>% 
@@ -1376,9 +1358,6 @@ forecast_6_1 %>%
 
 
 # DSX - 7
-dsx_7[-1, ] -> dsx_7
-colnames(dsx_7) <- dsx_7[1, ]
-dsx_7[-1, ] -> dsx_7
 
 dsx_7 %>% 
   janitor::clean_names() %>% 
@@ -1426,9 +1405,6 @@ forecast_7_1 %>%
 
 
 # DSX - 8
-dsx_8[-1, ] -> dsx_8
-colnames(dsx_8) <- dsx_8[1, ]
-dsx_8[-1, ] -> dsx_8
 
 dsx_8 %>% 
   janitor::clean_names() %>% 
@@ -1476,9 +1452,6 @@ forecast_8_1 %>%
 
 
 # DSX - 9
-dsx_9[-1, ] -> dsx_9
-colnames(dsx_9) <- dsx_9[1, ]
-dsx_9[-1, ] -> dsx_9
 
 dsx_9 %>% 
   janitor::clean_names() %>% 
@@ -1526,9 +1499,6 @@ forecast_9_1 %>%
 
 
 # DSX - 10
-dsx_10[-1, ] -> dsx_10
-colnames(dsx_10) <- dsx_10[1, ]
-dsx_10[-1, ] -> dsx_10
 
 dsx_10 %>% 
   janitor::clean_names() %>% 
@@ -1575,9 +1545,6 @@ forecast_10_1 %>%
 
 
 # DSX - 11
-dsx_11[-1, ] -> dsx_11
-colnames(dsx_11) <- dsx_11[1, ]
-dsx_11[-1, ] -> dsx_11
 
 dsx_11 %>% 
   janitor::clean_names() %>% 
@@ -1828,9 +1795,6 @@ forecast_lag_1_2 %>%
   dplyr::filter(mfg_loc != 16) -> forecast_lag_1_2
 
 # DSX - 1
-dsx_1[-1, ] -> dsx_1
-colnames(dsx_1) <- dsx_1[1, ]
-dsx_1[-1, ] -> dsx_1
 
 dsx_1 %>% 
   janitor::clean_names() %>% 
@@ -1876,9 +1840,6 @@ forecast_1_2 %>%
 
 
 # DSX - 2
-dsx_2[-1, ] -> dsx_2
-colnames(dsx_2) <- dsx_2[1, ]
-dsx_2[-1, ] -> dsx_2
 
 dsx_2 %>% 
   janitor::clean_names() %>% 
@@ -1924,9 +1885,6 @@ forecast_2_2 %>%
 
 
 # DSX - 3
-dsx_3[-1, ] -> dsx_3
-colnames(dsx_3) <- dsx_3[1, ]
-dsx_3[-1, ] -> dsx_3
 
 dsx_3 %>% 
   janitor::clean_names() %>% 
@@ -1973,9 +1931,6 @@ forecast_3_2 %>%
 
 
 # DSX - 4
-dsx_4[-1, ] -> dsx_4
-colnames(dsx_4) <- dsx_4[1, ]
-dsx_4[-1, ] -> dsx_4
 
 dsx_4 %>% 
   janitor::clean_names() %>% 
@@ -2022,9 +1977,6 @@ forecast_4_2 %>%
 
 
 # DSX - 5
-dsx_5[-1, ] -> dsx_5
-colnames(dsx_5) <- dsx_5[1, ]
-dsx_5[-1, ] -> dsx_5
 
 dsx_5 %>% 
   janitor::clean_names() %>% 
@@ -2072,9 +2024,6 @@ forecast_5_2 %>%
 
 
 # DSX - 6
-dsx_6[-1, ] -> dsx_6
-colnames(dsx_6) <- dsx_6[1, ]
-dsx_6[-1, ] -> dsx_6
 
 dsx_6 %>% 
   janitor::clean_names() %>% 
@@ -2121,9 +2070,6 @@ forecast_6_2 %>%
 
 
 # DSX - 7
-dsx_7[-1, ] -> dsx_7
-colnames(dsx_7) <- dsx_7[1, ]
-dsx_7[-1, ] -> dsx_7
 
 dsx_7 %>% 
   janitor::clean_names() %>% 
@@ -2171,9 +2117,6 @@ forecast_7_2 %>%
 
 
 # DSX - 8
-dsx_8[-1, ] -> dsx_8
-colnames(dsx_8) <- dsx_8[1, ]
-dsx_8[-1, ] -> dsx_8
 
 dsx_8 %>% 
   janitor::clean_names() %>% 
@@ -2221,9 +2164,6 @@ forecast_8_2 %>%
 
 
 # DSX - 9
-dsx_9[-1, ] -> dsx_9
-colnames(dsx_9) <- dsx_9[1, ]
-dsx_9[-1, ] -> dsx_9
 
 dsx_9 %>% 
   janitor::clean_names() %>% 
@@ -2271,9 +2211,6 @@ forecast_9_2 %>%
 
 
 # DSX - 10
-dsx_10[-1, ] -> dsx_10
-colnames(dsx_10) <- dsx_10[1, ]
-dsx_10[-1, ] -> dsx_10
 
 dsx_10 %>% 
   janitor::clean_names() %>% 
@@ -2479,9 +2416,6 @@ forecast_lag_3_3 %>%
 
 
 # DSX - Lag_2
-dsx_lag2[-1, ] -> dsx_lag2
-colnames(dsx_lag2) <- dsx_lag2[1, ]
-dsx_lag2[-1, ] -> dsx_lag2
 
 dsx_lag2 %>% 
   janitor::clean_names() %>% 
@@ -2574,9 +2508,6 @@ forecast_lag_1_3 %>%
 
 
 # DSX - 1
-dsx_1[-1, ] -> dsx_1
-colnames(dsx_1) <- dsx_1[1, ]
-dsx_1[-1, ] -> dsx_1
 
 dsx_1 %>% 
   janitor::clean_names() %>% 
@@ -2622,9 +2553,6 @@ forecast_1_3 %>%
 
 
 # DSX - 2
-dsx_2[-1, ] -> dsx_2
-colnames(dsx_2) <- dsx_2[1, ]
-dsx_2[-1, ] -> dsx_2
 
 dsx_2 %>% 
   janitor::clean_names() %>% 
@@ -2670,9 +2598,6 @@ forecast_2_3 %>%
 
 
 # DSX - 3
-dsx_3[-1, ] -> dsx_3
-colnames(dsx_3) <- dsx_3[1, ]
-dsx_3[-1, ] -> dsx_3
 
 dsx_3 %>% 
   janitor::clean_names() %>% 
@@ -2719,9 +2644,6 @@ forecast_3_3 %>%
 
 
 # DSX - 4
-dsx_4[-1, ] -> dsx_4
-colnames(dsx_4) <- dsx_4[1, ]
-dsx_4[-1, ] -> dsx_4
 
 dsx_4 %>% 
   janitor::clean_names() %>% 
@@ -2768,9 +2690,6 @@ forecast_4_3 %>%
 
 
 # DSX - 5
-dsx_5[-1, ] -> dsx_5
-colnames(dsx_5) <- dsx_5[1, ]
-dsx_5[-1, ] -> dsx_5
 
 dsx_5 %>% 
   janitor::clean_names() %>% 
@@ -2818,9 +2737,6 @@ forecast_5_3 %>%
 
 
 # DSX - 6
-dsx_6[-1, ] -> dsx_6
-colnames(dsx_6) <- dsx_6[1, ]
-dsx_6[-1, ] -> dsx_6
 
 dsx_6 %>% 
   janitor::clean_names() %>% 
@@ -2867,9 +2783,6 @@ forecast_6_3 %>%
 
 
 # DSX - 7
-dsx_7[-1, ] -> dsx_7
-colnames(dsx_7) <- dsx_7[1, ]
-dsx_7[-1, ] -> dsx_7
 
 dsx_7 %>% 
   janitor::clean_names() %>% 
@@ -2917,9 +2830,6 @@ forecast_7_3 %>%
 
 
 # DSX - 8
-dsx_8[-1, ] -> dsx_8
-colnames(dsx_8) <- dsx_8[1, ]
-dsx_8[-1, ] -> dsx_8
 
 dsx_8 %>% 
   janitor::clean_names() %>% 
@@ -2967,9 +2877,6 @@ forecast_8_3 %>%
 
 
 # DSX - 9
-dsx_9[-1, ] -> dsx_9
-colnames(dsx_9) <- dsx_9[1, ]
-dsx_9[-1, ] -> dsx_9
 
 dsx_9 %>% 
   janitor::clean_names() %>% 
@@ -3177,9 +3084,6 @@ forecast_lag_4_4 %>%
 
 
 # DSX - Lag_3
-dsx_lag3[-1, ] -> dsx_lag3
-colnames(dsx_lag3) <- dsx_lag3[1, ]
-dsx_lag3[-1, ] -> dsx_lag3
 
 dsx_lag3 %>% 
   janitor::clean_names() %>% 
@@ -3225,9 +3129,6 @@ forecast_lag_3_4 %>%
 
 
 # DSX - Lag_2
-dsx_lag2[-1, ] -> dsx_lag2
-colnames(dsx_lag2) <- dsx_lag2[1, ]
-dsx_lag2[-1, ] -> dsx_lag2
 
 dsx_lag2 %>% 
   janitor::clean_names() %>% 
@@ -3319,9 +3220,6 @@ forecast_lag_1_4 %>%
 
 
 # DSX - 1
-dsx_1[-1, ] -> dsx_1
-colnames(dsx_1) <- dsx_1[1, ]
-dsx_1[-1, ] -> dsx_1
 
 dsx_1 %>% 
   janitor::clean_names() %>% 
@@ -3367,9 +3265,6 @@ forecast_1_4 %>%
 
 
 # DSX - 2
-dsx_2[-1, ] -> dsx_2
-colnames(dsx_2) <- dsx_2[1, ]
-dsx_2[-1, ] -> dsx_2
 
 dsx_2 %>% 
   janitor::clean_names() %>% 
@@ -3415,9 +3310,6 @@ forecast_2_4 %>%
 
 
 # DSX - 3
-dsx_3[-1, ] -> dsx_3
-colnames(dsx_3) <- dsx_3[1, ]
-dsx_3[-1, ] -> dsx_3
 
 dsx_3 %>% 
   janitor::clean_names() %>% 
@@ -3464,9 +3356,6 @@ forecast_3_4 %>%
 
 
 # DSX - 4
-dsx_4[-1, ] -> dsx_4
-colnames(dsx_4) <- dsx_4[1, ]
-dsx_4[-1, ] -> dsx_4
 
 dsx_4 %>% 
   janitor::clean_names() %>% 
@@ -3513,9 +3402,6 @@ forecast_4_4 %>%
 
 
 # DSX - 5
-dsx_5[-1, ] -> dsx_5
-colnames(dsx_5) <- dsx_5[1, ]
-dsx_5[-1, ] -> dsx_5
 
 dsx_5 %>% 
   janitor::clean_names() %>% 
@@ -3563,9 +3449,6 @@ forecast_5_4 %>%
 
 
 # DSX - 6
-dsx_6[-1, ] -> dsx_6
-colnames(dsx_6) <- dsx_6[1, ]
-dsx_6[-1, ] -> dsx_6
 
 dsx_6 %>% 
   janitor::clean_names() %>% 
@@ -3612,9 +3495,6 @@ forecast_6_4 %>%
 
 
 # DSX - 7
-dsx_7[-1, ] -> dsx_7
-colnames(dsx_7) <- dsx_7[1, ]
-dsx_7[-1, ] -> dsx_7
 
 dsx_7 %>% 
   janitor::clean_names() %>% 
@@ -3662,9 +3542,6 @@ forecast_7_4 %>%
 
 
 # DSX - 8
-dsx_8[-1, ] -> dsx_8
-colnames(dsx_8) <- dsx_8[1, ]
-dsx_8[-1, ] -> dsx_8
 
 dsx_8 %>% 
   janitor::clean_names() %>% 
@@ -4114,9 +3991,6 @@ colnames(final_paper)[51]	<-	"DSX"
 
 
 writexl::write_xlsx(final_paper, "oil_consumption_comparison.xlsx")
-
-
-
 
 
 
