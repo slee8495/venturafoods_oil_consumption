@@ -3904,17 +3904,22 @@ identitied_skus_not_existing %>%
   dplyr::select(year, month, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, component, oil_description, bulk,
                 quantity_w_scrap, actual_shipped_cases, consumption_qty_actual_shipped, order_qty_final,
                 order_qty_original,	consumption_qty_sales_order_qty, 
-                adjusted_forecast_cases_lag0, forecasted_oil_qty_lag0, consumption_percent_adjusted_actual_shipped_lag0, 
-                diff_between_forecast_actual_lag0, consumption_percent_adjusted_sales_order_lag0,
-                adjusted_forecast_cases_lag0, forecasted_oil_qty_lag1, consumption_percent_adjusted_actual_shipped_lag1, 
-                diff_between_forecast_actual_lag1, consumption_percent_adjusted_sales_order_lag1,
-                diff_between_forecast_original_lag1, adjusted_forecast_cases_lag2, forecasted_oil_qty_lag2,	
-                consumption_percent_adjusted_actual_shipped_lag2,	diff_between_forecast_actual_lag2, consumption_percent_adjusted_sales_order_lag2,
-                diff_between_forecast_original_lag2, adjusted_forecast_cases_lag3, forecasted_oil_qty_lag3,	
-                consumption_percent_adjusted_actual_shipped_lag3,	diff_between_forecast_actual_lag3, consumption_percent_adjusted_sales_order_lag3,
-                diff_between_forecast_original_lag3, adjusted_forecast_cases_lag4, forecasted_oil_qty_lag4,
-                consumption_percent_adjusted_actual_shipped_lag4,	diff_between_forecast_actual_lag4, consumption_percent_adjusted_sales_order_lag4,
-                diff_between_forecast_original_lag4) %>% 
+                
+                adjusted_forecast_cases_lag0, forecasted_oil_qty_lag0, consumption_percent_adjusted_actual_shipped_lag0, diff_between_forecast_actual_lag0, 
+                consumption_percent_adjusted_sales_order_lag0, diff_between_forecast_original_lag0, 
+                
+                adjusted_forecast_cases_lag1, forecasted_oil_qty_lag1, consumption_percent_adjusted_actual_shipped_lag1, diff_between_forecast_actual_lag1, 
+                consumption_percent_adjusted_sales_order_lag1, diff_between_forecast_original_lag1, 
+                
+                adjusted_forecast_cases_lag2, forecasted_oil_qty_lag2, consumption_percent_adjusted_actual_shipped_lag2, diff_between_forecast_actual_lag2, 
+                consumption_percent_adjusted_sales_order_lag2, diff_between_forecast_original_lag2, 
+                
+                adjusted_forecast_cases_lag3, forecasted_oil_qty_lag3, consumption_percent_adjusted_actual_shipped_lag3, diff_between_forecast_actual_lag3, 
+                consumption_percent_adjusted_sales_order_lag3, diff_between_forecast_original_lag3, 
+                
+                adjusted_forecast_cases_lag4, forecasted_oil_qty_lag4, consumption_percent_adjusted_actual_shipped_lag4, diff_between_forecast_actual_lag4, 
+                consumption_percent_adjusted_sales_order_lag4, diff_between_forecast_original_lag4) %>% 
+  
   dplyr::arrange(year, month, mfg_loc, sku) -> identitied_skus_not_existing_2
 
 
@@ -3932,8 +3937,6 @@ identitied_skus_not_existing_2 %>%
   dplyr::mutate(dsx = "N") -> identitied_skus_not_existing_2
 
 rbind(oil_comsumption_comparison_final, identitied_skus_not_existing_2) -> final_paper
-
-
 
 
 colnames(final_paper)[1]	<-	"Year"
