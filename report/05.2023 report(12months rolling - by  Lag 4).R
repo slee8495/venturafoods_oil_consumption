@@ -1178,8 +1178,601 @@ oil_comsumption_comparison_final %>%
 #######################################################################################################################
 
 ###### Lag 2 #####
-rbind(forecast_lag_2, forecast_1, forecast_2, forecast_3, forecast_4, forecast_5, forecast_6, forecast_7, forecast_8, forecast_9, forecast_10,
-      forecast_11, forecast_12) -> forecast2
+
+# DSX - Lag_2
+dsx_lag2[-1, ] -> dsx_lag2
+colnames(dsx_lag2) <- dsx_lag2[1, ]
+dsx_lag2[-1, ] -> dsx_lag2
+
+dsx_lag2 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202205) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_lag_2_2
+
+
+forecast_lag_2_2 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_lag_2_2
+
+forecast_lag_2_2$forecast_month_year_code -> forecast_month_year_code_1
+substr(forecast_month_year_code_1, nchar(forecast_month_year_code_1)-1, nchar(forecast_month_year_code_1)) %>% 
+  data.frame() %>% 
+  cbind(forecast_lag_2_2) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_lag_2_2
+
+
+forecast_lag_2_2 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_lag_2_2
+
+
+
+# DSX - 1
+dsx_1[-1, ] -> dsx_1
+colnames(dsx_1) <- dsx_1[1, ]
+dsx_1[-1, ] -> dsx_1
+
+dsx_1 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202206) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_1_2
+
+
+forecast_1_2 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_1_2
+
+forecast_1_2$forecast_month_year_code -> forecast_month_year_code_1
+substr(forecast_month_year_code_1, nchar(forecast_month_year_code_1)-1, nchar(forecast_month_year_code_1)) %>% 
+  data.frame() %>% 
+  cbind(forecast_1_2) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_1_2
+
+
+forecast_1_2 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_1_2
+
+
+# DSX - 2
+dsx_2[-1, ] -> dsx_2
+colnames(dsx_2) <- dsx_2[1, ]
+dsx_2[-1, ] -> dsx_2
+
+dsx_2 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202207) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_2_2
+
+
+forecast_2_2 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_2_2
+
+forecast_2_2$forecast_month_year_code -> forecast_month_year_code_2
+substr(forecast_month_year_code_2, nchar(forecast_month_year_code_2)-1, nchar(forecast_month_year_code_2)) %>% 
+  data.frame() %>% 
+  cbind(forecast_2_2) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_2_2
+
+
+forecast_2_2 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_2_2
+
+
+# DSX - 3
+dsx_3[-1, ] -> dsx_3
+colnames(dsx_3) <- dsx_3[1, ]
+dsx_3[-1, ] -> dsx_3
+
+dsx_3 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202208) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_3_2
+
+
+forecast_3_2 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_3_2
+
+forecast_3_2$forecast_month_year_code -> forecast_month_year_code_3
+substr(forecast_month_year_code_3, nchar(forecast_month_year_code_3)-1, nchar(forecast_month_year_code_3)) %>% 
+  data.frame() %>% 
+  cbind(forecast_3_2) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_3_2
+
+
+
+forecast_3_2 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_3_2
+
+
+# DSX - 4
+dsx_4[-1, ] -> dsx_4
+colnames(dsx_4) <- dsx_4[1, ]
+dsx_4[-1, ] -> dsx_4
+
+dsx_4 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_4_2 
+
+
+forecast_4_2 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_4_2
+
+forecast_4_2$forecast_month_year_code -> forecast_month_year_code_4
+substr(forecast_month_year_code_4, nchar(forecast_month_year_code_4)-1, nchar(forecast_month_year_code_4)) %>% 
+  data.frame() %>% 
+  cbind(forecast_4_2) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_4_2
+
+
+
+forecast_4_2 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_4_2
+
+
+# DSX - 5
+dsx_5[-1, ] -> dsx_5
+colnames(dsx_5) <- dsx_5[1, ]
+dsx_5[-1, ] -> dsx_5
+
+dsx_5 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_5_2 
+
+
+forecast_5_2 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_5_2
+
+forecast_5_2$forecast_month_year_code -> forecast_month_year_code_5
+substr(forecast_month_year_code_5, nchar(forecast_month_year_code_5)-1, nchar(forecast_month_year_code_5)) %>% 
+  data.frame() %>% 
+  cbind(forecast_5_2) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_5_2
+
+
+forecast_5_2 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_5_2
+
+
+
+
+# DSX - 6
+dsx_6[-1, ] -> dsx_6
+colnames(dsx_6) <- dsx_6[1, ]
+dsx_6[-1, ] -> dsx_6
+
+dsx_6 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202211) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_6_2
+
+
+forecast_6_2 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_6_2
+
+forecast_6_2$forecast_month_year_code -> forecast_month_year_code_6
+substr(forecast_month_year_code_6, nchar(forecast_month_year_code_6)-1, nchar(forecast_month_year_code_6)) %>% 
+  data.frame() %>% 
+  cbind(forecast_6_2) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_6_2
+
+forecast_6_2 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_6_2
+
+
+
+
+# DSX - 7
+dsx_7[-1, ] -> dsx_7
+colnames(dsx_7) <- dsx_7[1, ]
+dsx_7[-1, ] -> dsx_7
+
+dsx_7 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202212) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_7_2
+
+
+forecast_7_2 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_7_2
+
+forecast_7_2$forecast_month_year_code -> forecast_month_year_code_7
+substr(forecast_month_year_code_7, nchar(forecast_month_year_code_7)-1, nchar(forecast_month_year_code_7)) %>% 
+  data.frame() %>% 
+  cbind(forecast_7_2) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_7_2
+
+
+forecast_7_2 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_7_2
+
+
+
+
+# DSX - 8
+dsx_8[-1, ] -> dsx_8
+colnames(dsx_8) <- dsx_8[1, ]
+dsx_8[-1, ] -> dsx_8
+
+dsx_8 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202301) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_8_2
+
+
+forecast_8_2 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_8_2
+
+forecast_8_2$forecast_month_year_code -> forecast_month_year_code_8
+substr(forecast_month_year_code_8, nchar(forecast_month_year_code_8)-1, nchar(forecast_month_year_code_8)) %>% 
+  data.frame() %>% 
+  cbind(forecast_8_2) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_8_2
+
+
+forecast_8_2 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_8_2
+
+
+
+
+# DSX - 9
+dsx_9[-1, ] -> dsx_9
+colnames(dsx_9) <- dsx_9[1, ]
+dsx_9[-1, ] -> dsx_9
+
+dsx_9 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202302) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_9_2
+
+
+forecast_9_2 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_9_2
+
+forecast_9_2$forecast_month_year_code -> forecast_month_year_code_9
+substr(forecast_month_year_code_9, nchar(forecast_month_year_code_9)-1, nchar(forecast_month_year_code_9)) %>% 
+  data.frame() %>% 
+  cbind(forecast_9_2) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_9_2
+
+
+forecast_9_2 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_9_2
+
+
+
+
+# DSX - 10
+dsx_10[-1, ] -> dsx_10
+colnames(dsx_10) <- dsx_10[1, ]
+dsx_10[-1, ] -> dsx_10
+
+dsx_10 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202303) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_10_2
+
+
+forecast_10_2 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_10_2
+
+forecast_10_2$forecast_month_year_code -> forecast_month_year_code_10
+substr(forecast_month_year_code_10, nchar(forecast_month_year_code_10)-1, nchar(forecast_month_year_code_10)) %>% 
+  data.frame() %>% 
+  cbind(forecast_10_2) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_10_2
+
+
+forecast_10_2 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_10_2
+
+
+
+# DSX - 11
+dsx_11[-1, ] -> dsx_11
+colnames(dsx_11) <- dsx_11[1, ]
+dsx_11[-1, ] -> dsx_11
+
+dsx_11 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202304) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_11_2
+
+
+forecast_11_2 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_11_2
+
+forecast_11_2$forecast_month_year_code -> forecast_month_year_code_11
+substr(forecast_month_year_code_11, nchar(forecast_month_year_code_11)-1, nchar(forecast_month_year_code_11)) %>% 
+  data.frame() %>% 
+  cbind(forecast_11_2) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_11_2
+
+
+forecast_11_2 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_11_2
+
+
+
+
+
+rbind(forecast_lag_2_2, forecast_1_2, forecast_2_2, forecast_3_2, forecast_4_2, forecast_5_2, forecast_6_2, forecast_7_2, 
+      forecast_8_2, forecast_9_2, forecast_10_2, forecast_11_2) -> forecast2
 
 
 forecast2 %>%
@@ -1288,8 +1881,602 @@ oil_comsumption_comparison_final_lag_2 %>%
 
 
 ###### Lag 3 #####
-rbind(forecast_lag_3, forecast_lag_2, forecast_1, forecast_2, forecast_3, forecast_4, forecast_5, forecast_6, forecast_7, forecast_8, forecast_9, 
-      forecast_10, forecast_11, forecast_12) -> forecast3
+
+# DSX - Lag_3
+dsx_lag3[-1, ] -> dsx_lag3
+colnames(dsx_lag3) <- dsx_lag3[1, ]
+dsx_lag3[-1, ] -> dsx_lag3
+
+dsx_lag3 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202205) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_lag_3_3
+
+
+forecast_lag_3_3 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_lag_3_3
+
+forecast_lag_3_3$forecast_month_year_code -> forecast_month_year_code_1
+substr(forecast_month_year_code_1, nchar(forecast_month_year_code_1)-1, nchar(forecast_month_year_code_1)) %>% 
+  data.frame() %>% 
+  cbind(forecast_lag_3_3) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_lag_3_3
+
+
+forecast_lag_3_3 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_lag_3_3
+
+
+# DSX - Lag_2
+dsx_lag2[-1, ] -> dsx_lag2
+colnames(dsx_lag2) <- dsx_lag2[1, ]
+dsx_lag2[-1, ] -> dsx_lag2
+
+dsx_lag2 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202206) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_lag_2_3
+
+
+forecast_lag_2_3 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_lag_2_3
+
+forecast_lag_2_3$forecast_month_year_code -> forecast_month_year_code_1
+substr(forecast_month_year_code_1, nchar(forecast_month_year_code_1)-1, nchar(forecast_month_year_code_1)) %>% 
+  data.frame() %>% 
+  cbind(forecast_lag_2_3) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_lag_2_3
+
+
+forecast_lag_2_3 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_lag_2_3
+
+
+
+# DSX - 1
+dsx_1[-1, ] -> dsx_1
+colnames(dsx_1) <- dsx_1[1, ]
+dsx_1[-1, ] -> dsx_1
+
+dsx_1 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202207) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_1_3
+
+
+forecast_1_3 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_1_3
+
+forecast_1_3$forecast_month_year_code -> forecast_month_year_code_1
+substr(forecast_month_year_code_1, nchar(forecast_month_year_code_1)-1, nchar(forecast_month_year_code_1)) %>% 
+  data.frame() %>% 
+  cbind(forecast_1_3) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_1_3
+
+
+forecast_1_3 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_1_3
+
+
+# DSX - 2
+dsx_2[-1, ] -> dsx_2
+colnames(dsx_2) <- dsx_2[1, ]
+dsx_2[-1, ] -> dsx_2
+
+dsx_2 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202208) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_2_3
+
+
+forecast_2_3 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_2_3
+
+forecast_2_3$forecast_month_year_code -> forecast_month_year_code_2
+substr(forecast_month_year_code_2, nchar(forecast_month_year_code_2)-1, nchar(forecast_month_year_code_2)) %>% 
+  data.frame() %>% 
+  cbind(forecast_2_3) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_2_3
+
+
+forecast_2_3 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_2_3
+
+
+# DSX - 3
+dsx_3[-1, ] -> dsx_3
+colnames(dsx_3) <- dsx_3[1, ]
+dsx_3[-1, ] -> dsx_3
+
+dsx_3 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_3_3
+
+
+forecast_3_3 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_3_3
+
+forecast_3_3$forecast_month_year_code -> forecast_month_year_code_3
+substr(forecast_month_year_code_3, nchar(forecast_month_year_code_3)-1, nchar(forecast_month_year_code_3)) %>% 
+  data.frame() %>% 
+  cbind(forecast_3_3) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_3_3
+
+
+
+forecast_3_3 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_3_3
+
+
+# DSX - 4
+dsx_4[-1, ] -> dsx_4
+colnames(dsx_4) <- dsx_4[1, ]
+dsx_4[-1, ] -> dsx_4
+
+dsx_4 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_4_3 
+
+
+forecast_4_3 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_4_3
+
+forecast_4_3$forecast_month_year_code -> forecast_month_year_code_4
+substr(forecast_month_year_code_4, nchar(forecast_month_year_code_4)-1, nchar(forecast_month_year_code_4)) %>% 
+  data.frame() %>% 
+  cbind(forecast_4_3) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_4_3
+
+
+
+forecast_4_3 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_4_3
+
+
+# DSX - 5
+dsx_5[-1, ] -> dsx_5
+colnames(dsx_5) <- dsx_5[1, ]
+dsx_5[-1, ] -> dsx_5
+
+dsx_5 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202211) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_5_3 
+
+
+forecast_5_3 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_5_3
+
+forecast_5_3$forecast_month_year_code -> forecast_month_year_code_5
+substr(forecast_month_year_code_5, nchar(forecast_month_year_code_5)-1, nchar(forecast_month_year_code_5)) %>% 
+  data.frame() %>% 
+  cbind(forecast_5_3) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_5_3
+
+
+forecast_5_3 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_5_3
+
+
+
+
+# DSX - 6
+dsx_6[-1, ] -> dsx_6
+colnames(dsx_6) <- dsx_6[1, ]
+dsx_6[-1, ] -> dsx_6
+
+dsx_6 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202212) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_6_3
+
+
+forecast_6_3 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_6_3
+
+forecast_6_3$forecast_month_year_code -> forecast_month_year_code_6
+substr(forecast_month_year_code_6, nchar(forecast_month_year_code_6)-1, nchar(forecast_month_year_code_6)) %>% 
+  data.frame() %>% 
+  cbind(forecast_6_3) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_6_3
+
+forecast_6_3 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_6_3
+
+
+
+
+# DSX - 7
+dsx_7[-1, ] -> dsx_7
+colnames(dsx_7) <- dsx_7[1, ]
+dsx_7[-1, ] -> dsx_7
+
+dsx_7 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202301) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_7_3
+
+
+forecast_7_3 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_7_3
+
+forecast_7_3$forecast_month_year_code -> forecast_month_year_code_7
+substr(forecast_month_year_code_7, nchar(forecast_month_year_code_7)-1, nchar(forecast_month_year_code_7)) %>% 
+  data.frame() %>% 
+  cbind(forecast_7_3) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_7_3
+
+
+forecast_7_3 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_7_3
+
+
+
+
+# DSX - 8
+dsx_8[-1, ] -> dsx_8
+colnames(dsx_8) <- dsx_8[1, ]
+dsx_8[-1, ] -> dsx_8
+
+dsx_8 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202302) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_8_3
+
+
+forecast_8_3 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_8_3
+
+forecast_8_3$forecast_month_year_code -> forecast_month_year_code_8
+substr(forecast_month_year_code_8, nchar(forecast_month_year_code_8)-1, nchar(forecast_month_year_code_8)) %>% 
+  data.frame() %>% 
+  cbind(forecast_8_3) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_8_3
+
+
+forecast_8_3 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_8_3
+
+
+
+
+# DSX - 9
+dsx_9[-1, ] -> dsx_9
+colnames(dsx_9) <- dsx_9[1, ]
+dsx_9[-1, ] -> dsx_9
+
+dsx_9 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202303) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_9_3
+
+
+forecast_9_3 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_9_3
+
+forecast_9_3$forecast_month_year_code -> forecast_month_year_code_9
+substr(forecast_month_year_code_9, nchar(forecast_month_year_code_9)-1, nchar(forecast_month_year_code_9)) %>% 
+  data.frame() %>% 
+  cbind(forecast_9_3) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_9_3
+
+
+forecast_9_3 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_9_3
+
+
+
+
+# DSX - 10
+dsx_10[-1, ] -> dsx_10
+colnames(dsx_10) <- dsx_10[1, ]
+dsx_10[-1, ] -> dsx_10
+
+dsx_10 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202304) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_10_3
+
+
+forecast_10_3 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_10_3
+
+forecast_10_3$forecast_month_year_code -> forecast_month_year_code_10
+substr(forecast_month_year_code_10, nchar(forecast_month_year_code_10)-1, nchar(forecast_month_year_code_10)) %>% 
+  data.frame() %>% 
+  cbind(forecast_10_3) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_10_3
+
+
+forecast_10_3 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_10_3
+
+
+
+
+
+
+
+rbind(forecast_lag_3_3, forecast_lag_2_3, forecast_1_3, forecast_2_3, forecast_3_3, forecast_4_3, forecast_5_3, forecast_6_3, forecast_7_3, forecast_8_3, 
+      forecast_9_3, forecast_10_3) -> forecast3
 
 
 forecast3 %>%
@@ -1398,8 +2585,600 @@ oil_comsumption_comparison_final_lag_3 %>%
 
 
 ###### Lag 4 #####
-rbind(forecast_lag_4, forecast_lag_3, forecast_lag_2, forecast_1, forecast_2, forecast_3, forecast_4, forecast_5, forecast_6, forecast_7, forecast_8, 
-      forecast_9, forecast_10, forecast_11, forecast_12) -> forecast4
+
+# DSX - Lag_4
+dsx_lag4[-1, ] -> dsx_lag4
+colnames(dsx_lag4) <- dsx_lag4[1, ]
+dsx_lag4[-1, ] -> dsx_lag4
+
+dsx_lag4 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202205) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_lag_4_4
+
+
+forecast_lag_4_4 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_lag_4_4
+
+forecast_lag_4_4$forecast_month_year_code -> forecast_month_year_code_1
+substr(forecast_month_year_code_1, nchar(forecast_month_year_code_1)-1, nchar(forecast_month_year_code_1)) %>% 
+  data.frame() %>% 
+  cbind(forecast_lag_4_4) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_lag_4_4
+
+
+forecast_lag_4_4 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_lag_4_4
+
+
+
+# DSX - Lag_3
+dsx_lag3[-1, ] -> dsx_lag3
+colnames(dsx_lag3) <- dsx_lag3[1, ]
+dsx_lag3[-1, ] -> dsx_lag3
+
+dsx_lag3 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202206) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_lag_3_4
+
+
+forecast_lag_3_4 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_lag_3_4
+
+forecast_lag_3_4$forecast_month_year_code -> forecast_month_year_code_1
+substr(forecast_month_year_code_1, nchar(forecast_month_year_code_1)-1, nchar(forecast_month_year_code_1)) %>% 
+  data.frame() %>% 
+  cbind(forecast_lag_3_4) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_lag_3_4
+
+
+forecast_lag_3_4 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_lag_3_4
+
+
+# DSX - Lag_2
+dsx_lag2[-1, ] -> dsx_lag2
+colnames(dsx_lag2) <- dsx_lag2[1, ]
+dsx_lag2[-1, ] -> dsx_lag2
+
+dsx_lag2 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202207) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_lag_2_4
+
+
+forecast_lag_2_4 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_lag_2_4
+
+forecast_lag_2_4$forecast_month_year_code -> forecast_month_year_code_1
+substr(forecast_month_year_code_1, nchar(forecast_month_year_code_1)-1, nchar(forecast_month_year_code_1)) %>% 
+  data.frame() %>% 
+  cbind(forecast_lag_2_4) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_lag_2_4
+
+
+forecast_lag_2_4 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_lag_2_4
+
+
+
+# DSX - 1
+dsx_1[-1, ] -> dsx_1
+colnames(dsx_1) <- dsx_1[1, ]
+dsx_1[-1, ] -> dsx_1
+
+dsx_1 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202208) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_1_4
+
+
+forecast_1_4 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_1_4
+
+forecast_1_4$forecast_month_year_code -> forecast_month_year_code_1
+substr(forecast_month_year_code_1, nchar(forecast_month_year_code_1)-1, nchar(forecast_month_year_code_1)) %>% 
+  data.frame() %>% 
+  cbind(forecast_1_4) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_1_4
+
+
+forecast_1_4 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_1_4
+
+
+# DSX - 2
+dsx_2[-1, ] -> dsx_2
+colnames(dsx_2) <- dsx_2[1, ]
+dsx_2[-1, ] -> dsx_2
+
+dsx_2 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_2_4
+
+
+forecast_2_4 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_2_4
+
+forecast_2_4$forecast_month_year_code -> forecast_month_year_code_2
+substr(forecast_month_year_code_2, nchar(forecast_month_year_code_2)-1, nchar(forecast_month_year_code_2)) %>% 
+  data.frame() %>% 
+  cbind(forecast_2_4) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_2_4
+
+
+forecast_2_4 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_2_4
+
+
+# DSX - 3
+dsx_3[-1, ] -> dsx_3
+colnames(dsx_3) <- dsx_3[1, ]
+dsx_3[-1, ] -> dsx_3
+
+dsx_3 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_3_4
+
+
+forecast_3_4 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_3_4
+
+forecast_3_4$forecast_month_year_code -> forecast_month_year_code_3
+substr(forecast_month_year_code_3, nchar(forecast_month_year_code_3)-1, nchar(forecast_month_year_code_3)) %>% 
+  data.frame() %>% 
+  cbind(forecast_3_4) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_3_4
+
+
+
+forecast_3_4 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_3_4
+
+
+# DSX - 4
+dsx_4[-1, ] -> dsx_4
+colnames(dsx_4) <- dsx_4[1, ]
+dsx_4[-1, ] -> dsx_4
+
+dsx_4 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202211) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_4_4 
+
+
+forecast_4_4 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_4_4
+
+forecast_4_4$forecast_month_year_code -> forecast_month_year_code_4
+substr(forecast_month_year_code_4, nchar(forecast_month_year_code_4)-1, nchar(forecast_month_year_code_4)) %>% 
+  data.frame() %>% 
+  cbind(forecast_4_4) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_4_4
+
+
+
+forecast_4_4 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_4_4
+
+
+# DSX - 5
+dsx_5[-1, ] -> dsx_5
+colnames(dsx_5) <- dsx_5[1, ]
+dsx_5[-1, ] -> dsx_5
+
+dsx_5 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202212) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_5_4 
+
+
+forecast_5_4 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_5_4
+
+forecast_5_4$forecast_month_year_code -> forecast_month_year_code_5
+substr(forecast_month_year_code_5, nchar(forecast_month_year_code_5)-1, nchar(forecast_month_year_code_5)) %>% 
+  data.frame() %>% 
+  cbind(forecast_5_4) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_5_4
+
+
+forecast_5_4 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_5_4
+
+
+
+
+# DSX - 6
+dsx_6[-1, ] -> dsx_6
+colnames(dsx_6) <- dsx_6[1, ]
+dsx_6[-1, ] -> dsx_6
+
+dsx_6 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202301) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_6_4
+
+
+forecast_6_4 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_6_4
+
+forecast_6_4$forecast_month_year_code -> forecast_month_year_code_6
+substr(forecast_month_year_code_6, nchar(forecast_month_year_code_6)-1, nchar(forecast_month_year_code_6)) %>% 
+  data.frame() %>% 
+  cbind(forecast_6_4) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_6_4
+
+forecast_6_4 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_6_4
+
+
+
+
+# DSX - 7
+dsx_7[-1, ] -> dsx_7
+colnames(dsx_7) <- dsx_7[1, ]
+dsx_7[-1, ] -> dsx_7
+
+dsx_7 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202302) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_7_4
+
+
+forecast_7_4 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_7_4
+
+forecast_7_4$forecast_month_year_code -> forecast_month_year_code_7
+substr(forecast_month_year_code_7, nchar(forecast_month_year_code_7)-1, nchar(forecast_month_year_code_7)) %>% 
+  data.frame() %>% 
+  cbind(forecast_7_4) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_7_4
+
+
+forecast_7_4 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_7_4
+
+
+
+
+# DSX - 8
+dsx_8[-1, ] -> dsx_8
+colnames(dsx_8) <- dsx_8[1, ]
+dsx_8[-1, ] -> dsx_8
+
+dsx_8 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202303) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_8_4
+
+
+forecast_8_4 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_8_4
+
+forecast_8_4$forecast_month_year_code -> forecast_month_year_code_8
+substr(forecast_month_year_code_8, nchar(forecast_month_year_code_8)-1, nchar(forecast_month_year_code_8)) %>% 
+  data.frame() %>% 
+  cbind(forecast_8_4) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_8_4
+
+
+forecast_8_4 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_8_4
+
+
+
+
+# DSX - 9
+dsx_9[-1, ] -> dsx_9
+colnames(dsx_9) <- dsx_9[1, ]
+dsx_9[-1, ] -> dsx_9
+
+dsx_9 %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  data.frame() %>% 
+  dplyr::filter(forecast_month_year_code == 202304) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+dplyr::rename(mfg_loc = product_manufacturing_location_code,
+              location = location_no,
+              sku = product_label_sku_code,
+              sku_description = product_label_sku_name,
+              category = product_category_name,
+              platform = product_platform_name,
+              group_no = product_group_code,
+              group = product_group_short_name) %>% 
+  dplyr::mutate(sku = gsub("-", "", sku),
+                ref = paste0(location, "_", sku),
+                mfg_ref = paste0(mfg_loc, "_", sku),
+                label = stringr::str_sub(sku, 6, 8)) %>% 
+  dplyr::select(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, adjusted_forecast_cases,
+                adjusted_forecast_pounds_lbs) %>% 
+  dplyr::mutate(adjusted_forecast_pounds_lbs = replace(adjusted_forecast_pounds_lbs, is.na(adjusted_forecast_pounds_lbs), 0),
+                adjusted_forecast_cases = replace(adjusted_forecast_cases, is.na(adjusted_forecast_cases), 0)) -> forecast_9_4
+
+
+forecast_9_4 %>% 
+  dplyr::group_by(forecast_month_year_code, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group) %>% 
+  dplyr::summarise(adjusted_forecast_cases = sum(adjusted_forecast_cases),
+                   adjusted_forecast_pounds_lbs = sum(adjusted_forecast_pounds_lbs)) %>% 
+  dplyr::mutate(year = stringr::str_sub(forecast_month_year_code, 1, 4)) -> forecast_9_4
+
+forecast_9_4$forecast_month_year_code -> forecast_month_year_code_9
+substr(forecast_month_year_code_9, nchar(forecast_month_year_code_9)-1, nchar(forecast_month_year_code_9)) %>% 
+  data.frame() %>% 
+  cbind(forecast_9_4) %>% 
+  dplyr::rename(month = ".") %>% 
+  dplyr::select(-forecast_month_year_code) %>% 
+  dplyr::relocate(year, month) -> forecast_9_4
+
+
+forecast_9_4 %>% 
+  dplyr::filter(mfg_loc != 22) %>% 
+  dplyr::filter(mfg_loc != 16) -> forecast_9_4
+
+
+
+
+
+
+rbind(forecast_lag_4_4, forecast_lag_3_4, forecast_lag_2_4, forecast_1_4, forecast_2_4, forecast_3_4, forecast_4_4, forecast_5_4, forecast_6_4, 
+      forecast_7_4, forecast_8_4, forecast_9_4) -> forecast4
 
 
 forecast4 %>%
