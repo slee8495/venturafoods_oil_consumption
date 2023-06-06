@@ -14,32 +14,32 @@ library(lubridate)
 
 ######################################################### DSX List ######################################################
 
-dsx_lag4 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.01.03.xlsx")
-dsx_lag3 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.02.01.xlsx")
-dsx_lag2 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.03.15.xlsx")
-dsx_lag1 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.04.01.xlsx")
+dsx_lag4 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.02.01.xlsx")
+dsx_lag3 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.03.15.xlsx")
+dsx_lag2 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.04.01.xlsx")
+dsx_lag1 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.05.02.xlsx")
 
-dsx_1 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.05.02.xlsx")
-dsx_2 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.06.01.xlsx")
-dsx_3 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.07.05.xlsx")
-dsx_4 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.08.01.xlsx")
-dsx_5 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.09.02.xlsx")
-dsx_6 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.10.03.xlsx")
-dsx_7 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.11.01.xlsx")
-dsx_8 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.12.01.xlsx")
-dsx_9 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.01.03.xlsx")
-dsx_10 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.02.02.xlsx")
-dsx_11 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2023/DSX Forecast Backup - 2023.03.01.xlsx")
-dsx_12 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2023/DSX Forecast Backup - 2023.04.03.xlsx")
+dsx_1 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.06.01.xlsx")
+dsx_2 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.07.05.xlsx")
+dsx_3 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.08.01.xlsx")
+dsx_4 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.09.02.xlsx")
+dsx_5 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.10.03.xlsx")
+dsx_6 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.11.01.xlsx")
+dsx_7 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.12.01.xlsx")
+dsx_8 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.01.03.xlsx")
+dsx_9 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.02.02.xlsx")
+dsx_10 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2022/DSX Forecast Backup - 2022.03.01.xlsx")
+dsx_11 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2023/DSX Forecast Backup - 2023.04.03.xlsx")
+dsx_12 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/Demand Planning Team/BI Forecast Backup/2023/DSX Forecast Backup - 2023.05.03.xlsx")
 
 ######################################################### Other List ######################################################
 
 # BoM RM to sku 
-rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 05.04.23.xlsx", 
+rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 05.31.23.xlsx", 
                         sheet = "RM to SKU")
 
 # BoM Report 
-bom <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 05.04.23.xlsx", 
+bom <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 05.31.23.xlsx", 
                   sheet = "BoM")
 
 # Bulk Oil List ----
@@ -48,15 +48,15 @@ bulk_oil_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work
 
 ## sku_actual (Make sure in the MSTR if months info input correct) 
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
-sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2023. 5 Lag 4/shipped.xlsx")
+sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2023. 6 Lag 4/shipped.xlsx")
 
 # Input sales orders (Make sure in the MSTR if months info input correct) 
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
-sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2023. 5 Lag 4/ordered.xlsx")
+sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2023. 6 Lag 4/ordered.xlsx")
 
 
 # Completed SKU List 
-completed_sku_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2023. 5 Lag 4/Completed SKU list.xlsx")
+completed_sku_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2023. 6 Lag 4/Completed SKU list - Linda (11).xlsx")
 
 ###########################################################################################################################
 
@@ -73,7 +73,7 @@ dsx_1 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202205) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202206) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -121,7 +121,7 @@ dsx_2 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202206) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202207) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -169,7 +169,7 @@ dsx_3 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202207) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202208) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -218,7 +218,7 @@ dsx_4 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202208) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -267,7 +267,7 @@ dsx_5 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -317,7 +317,7 @@ dsx_6 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202211) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -366,7 +366,7 @@ dsx_7 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202211) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202212) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -416,7 +416,7 @@ dsx_8 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202212) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202301) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -466,7 +466,7 @@ dsx_9 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202301) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202302) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -516,7 +516,7 @@ dsx_10 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202302) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202303) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -565,7 +565,7 @@ dsx_11 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202303) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202304) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -615,7 +615,7 @@ dsx_12 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_id == 202304) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_id == 202305) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1042,7 +1042,7 @@ dsx_lag1 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202205) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202206) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1088,7 +1088,7 @@ dsx_1 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202206) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202207) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1133,7 +1133,7 @@ dsx_2 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202207) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202208) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1178,7 +1178,7 @@ dsx_3 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202208) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1224,7 +1224,7 @@ dsx_4 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1270,7 +1270,7 @@ dsx_5 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202211) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1317,7 +1317,7 @@ dsx_6 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202211) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202212) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1363,7 +1363,7 @@ dsx_7 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202212) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202301) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1410,7 +1410,7 @@ dsx_8 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202301) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202302) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1457,7 +1457,7 @@ dsx_9 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202302) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202303) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1504,7 +1504,7 @@ dsx_10 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202303) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202304) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1550,7 +1550,7 @@ dsx_11 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202304) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202305) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1711,7 +1711,7 @@ dsx_lag2 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202205) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202206) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1756,7 +1756,7 @@ dsx_lag1 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202206) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202207) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1800,7 +1800,7 @@ dsx_1 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202207) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202208) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1845,7 +1845,7 @@ dsx_2 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202208) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1890,7 +1890,7 @@ dsx_3 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1936,7 +1936,7 @@ dsx_4 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202211) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -1982,7 +1982,7 @@ dsx_5 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202211) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202212) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2029,7 +2029,7 @@ dsx_6 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202212) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202301) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2075,7 +2075,7 @@ dsx_7 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202301) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202302) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2122,7 +2122,7 @@ dsx_8 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202302) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202303) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2169,7 +2169,7 @@ dsx_9 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202303) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202304) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2216,7 +2216,7 @@ dsx_10 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202304) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202305) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2376,7 +2376,7 @@ dsx_lag3 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202205) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202206) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2421,7 +2421,7 @@ dsx_lag2 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202206) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202207) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2466,7 +2466,7 @@ dsx_lag1 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202207) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202208) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2513,7 +2513,7 @@ dsx_1 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202208) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2558,7 +2558,7 @@ dsx_2 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2603,7 +2603,7 @@ dsx_3 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202211) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2649,7 +2649,7 @@ dsx_4 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202211) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202212) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2695,7 +2695,7 @@ dsx_5 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202212) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202301) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2742,7 +2742,7 @@ dsx_6 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202301) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202302) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2788,7 +2788,7 @@ dsx_7 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202302) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202303) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2835,7 +2835,7 @@ dsx_8 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202303) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202304) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -2882,7 +2882,7 @@ dsx_9 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202304) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202305) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -3043,7 +3043,7 @@ dsx_lag4 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202205) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202206) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -3089,7 +3089,7 @@ dsx_lag3 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202206) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202207) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -3134,7 +3134,7 @@ dsx_lag2 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202207) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202208) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -3180,7 +3180,7 @@ dsx_lag1 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202208) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -3225,7 +3225,7 @@ dsx_1 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202209) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -3270,7 +3270,7 @@ dsx_2 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202210) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202211) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -3315,7 +3315,7 @@ dsx_3 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202211) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202212) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -3361,7 +3361,7 @@ dsx_4 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202212) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202301) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -3407,7 +3407,7 @@ dsx_5 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202301) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202302) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -3454,7 +3454,7 @@ dsx_6 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202302) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202303) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -3500,7 +3500,7 @@ dsx_7 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202303) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202304) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -3547,7 +3547,7 @@ dsx_8 %>%
   janitor::clean_names() %>% 
   readr::type_convert() %>% 
   data.frame() %>% 
-  dplyr::filter(forecast_month_year_code == 202304) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
+  dplyr::filter(forecast_month_year_code == 202305) %>%    ############################# MAKE SURE TO PUT THE DATE CORRECTLY ####################### ----
 dplyr::rename(mfg_loc = product_manufacturing_location_code,
               location = location_no,
               sku = product_label_sku_code,
@@ -3815,7 +3815,9 @@ s_1 %>%
   dplyr::arrange(year, month, mfg_loc, sku) -> identitied_skus_not_existing
 
 
-writexl::write_xlsx(identitied_skus_not_existing, "Identitied skus not existing.xlsx")
+
+# Export to Excel File ----
+writexl::write_xlsx(identitied_skus_not_existing, "Identitied skus not existing_June_2023.xlsx")
 
 
 
@@ -3992,8 +3994,17 @@ colnames(final_paper)[50]	<-	"Diff (Forecasted - Original Sales Order) (Lag 4)"
 colnames(final_paper)[51]	<-	"DSX"
 
 
+# Export to Excel File ----
+writexl::write_xlsx(final_paper, "oil_consumption_comparison_June_2023.xlsx")
 
-writexl::write_xlsx(final_paper, "oil_consumption_comparison.xlsx")
 
 
 
+
+# move missing sku file
+file.rename(from="C:/Users/slee/OneDrive - Ventura Foods/Stan/R Codes/Projects/Oil Consumption/venturafoods_oil_consumption/Identitied skus not existing_June_2023.xlsx",
+            to="C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2023. 6 Lag 4/Identitied skus not existing_June_2023.xlsx")
+
+# move oil file
+file.rename(from="C:/Users/slee/OneDrive - Ventura Foods/Stan/R Codes/Projects/Oil Consumption/venturafoods_oil_consumption/oil_consumption_comparison_June_2023.xlsx",
+            to="C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2023. 6 Lag 4/oil_consumption_comparison_June_2023.xlsx")
