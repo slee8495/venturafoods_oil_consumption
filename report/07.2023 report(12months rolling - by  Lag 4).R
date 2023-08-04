@@ -35,11 +35,11 @@ dsx_12 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Plann
 ######################################################### Other List ######################################################
 
 # BoM RM to sku 
-rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 07.26.23.xlsx", 
+rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 08.02.23.xlsx", 
                         sheet = "RM to SKU")
 
 # BoM Report 
-bom <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 07.26.23.xlsx", 
+bom <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) - 08.02.23.xlsx", 
                   sheet = "BoM")
 
 # Bulk Oil List ----
