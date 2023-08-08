@@ -685,6 +685,7 @@ oil_list %>%
   dplyr::rename(component = material_number) %>% 
   dplyr::mutate(component = as.double(component)) -> oil_list
 
+
 # Bulk Oil List ----
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/A00AF850E84EC6F52CFD9DABD1742F03/K53--K46
 # bulk_oil_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/Oct.2022 Report/Bulk Oil Table (3).xlsx")
@@ -714,7 +715,6 @@ rm_to_sku %>%
                 comp_description = comp_description_3,
                 sku = parent_item_number) %>% 
   dplyr::filter(!is.na(component)) -> rm_to_sku
-
 
 
 
@@ -922,7 +922,7 @@ oil_comsumption_comparison %>%
 bom %>% 
   dplyr::select(sku, component, quantity_w_scrap) -> bom_2
 
-bom_2[!duplicated(bom_2[,c("sku")]),] -> bom_2
+bom_2[!duplicated(bom_2[,c("sku", "component")]),] -> bom_2
 
 oil_comsumption_comparison %>% 
   dplyr::left_join(bom_2) -> oil_comsumption_comparison_ver2
@@ -964,6 +964,7 @@ oil_comsumption_comparison_ver2 %>%
 
 oil_comsumption_comparison_ver2 %>% 
   dplyr::filter(mfg_loc != "-1") -> oil_comsumption_comparison_ver2
+
 
 
 # add bulk_oil column
