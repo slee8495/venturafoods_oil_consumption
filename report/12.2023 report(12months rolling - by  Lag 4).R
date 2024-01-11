@@ -35,11 +35,11 @@ dsx_12 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Plann
 ######################################################### Other List ######################################################
 
 # BoM RM to sku 
-rm_to_sku <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) NEW TEMPLATE - 12.27.23.xlsx", 
+rm_to_sku <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/IQR Automation/RM/Weekly Report run/2023/12.27.23/Raw Material Inventory Health (IQR) NEW TEMPLATE - 12.27.23.xlsx", 
                         sheet = "RM to SKU")
 
 # BoM Report 
-bom <- read_excel("S:/Supply Chain Projects/LOGISTICS/SCP/Cost Saving Reporting/Inventory Days On Hand/Raw Material Inventory Health (IQR) NEW TEMPLATE - 12.27.23.xlsx", 
+bom <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/IQR Automation/RM/Weekly Report run/2023/12.27.23/Raw Material Inventory Health (IQR) NEW TEMPLATE - 12.27.23.xlsx", 
                   sheet = "BoM")
 
 # Bulk Oil List ----
@@ -3293,6 +3293,15 @@ identitied_skus_not_existing_2 %>%
   dplyr::mutate(dsx = "N") -> identitied_skus_not_existing_2
 
 rbind(oil_comsumption_comparison_final, identitied_skus_not_existing_2) -> final_paper
+
+
+
+final_paper %>% 
+  dplyr::filter(!(year == year(Sys.Date()) & month == month(Sys.Date()))) -> final_paper
+
+
+
+
 
 
 colnames(final_paper)[1]	<-	"Year"
