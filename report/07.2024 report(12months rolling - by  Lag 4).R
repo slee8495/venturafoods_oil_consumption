@@ -14,49 +14,49 @@ library(lubridate)
 
 ######################################################### DSX List ######################################################
 
-dsx_lag4 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.03.01.xlsx")
-dsx_lag3 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.04.03.xlsx")
-dsx_lag2 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.05.03.xlsx")
-dsx_lag1 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.06.01.xlsx")
+dsx_lag4 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.04.03.xlsx")
+dsx_lag3 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.05.03.xlsx")
+dsx_lag2 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.06.01.xlsx")
+dsx_lag1 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.07.05.xlsx")
 
-dsx_1 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.07.05.xlsx")
-dsx_2 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.08.01.xlsx")
-dsx_3 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.09.01.xlsx")
-dsx_4 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.10.02.xlsx")
-dsx_5 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.11.01.xlsx")
-dsx_6 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.12.04.xlsx")
-dsx_7 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2024/DSX Forecast Backup - 2024.01.02.xlsx")
-dsx_8 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2024/DSX Forecast Backup - 2024.02.01.xlsx")
-dsx_9 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2024/DSX Forecast Backup - 2024.03.01.xlsx")
-dsx_10 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2024/DSX Forecast Backup - 2024.04.01.xlsx")
-dsx_11 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2024/DSX Forecast Backup - 2024.05.01.xlsx")
-dsx_12 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2024/DSX Forecast Backup - 2024.06.03.xlsx")
+dsx_1 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.08.01.xlsx")
+dsx_2 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.09.02.xlsx")
+dsx_3 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.10.02.xlsx")
+dsx_4 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.11.01.xlsx")
+dsx_5 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2023/DSX Forecast Backup - 2023.12.04.xlsx")
+dsx_6 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2024/DSX Forecast Backup - 2024.01.02.xlsx")
+dsx_7 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2024/DSX Forecast Backup - 2024.02.01.xlsx")
+dsx_8 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2024/DSX Forecast Backup - 2024.03.01.xlsx")
+dsx_9 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2024/DSX Forecast Backup - 2024.04.01.xlsx")
+dsx_10 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2024/DSX Forecast Backup - 2024.05.01.xlsx")
+dsx_11 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2024/DSX Forecast Backup - 2024.06.03.xlsx")
+dsx_12 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Planning/BI Forecast Backup/2024/DSX Forecast Backup - 2024.07.01.xlsx")
 
 ######################################################### Other List ######################################################
 
 # BoM RM to sku 
-rm_to_sku <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/IQR Automation/RM/Weekly Report run/2024/06.25.2024/Raw Material Inventory Health (IQR) NEW TEMPLATE - 06.25.2024.xlsx", 
+rm_to_sku <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/IQR Automation/RM/Weekly Report run/2024/07.30.2024/Raw Material Inventory Health (IQR) NEW TEMPLATE - 07.30.2024.xlsx", 
                         sheet = "RM to SKU")
 
 # BoM Report 
-bom <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/IQR Automation/RM/Weekly Report run/2024/06.25.2024/Raw Material Inventory Health (IQR) NEW TEMPLATE - 06.25.2024.xlsx", 
+bom <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/IQR Automation/RM/Weekly Report run/2024/07.30.2024/Raw Material Inventory Health (IQR) NEW TEMPLATE - 07.30.2024.xlsx", 
                   sheet = "BoM")
 
 # Bulk Oil List ----
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/A00AF850E84EC6F52CFD9DABD1742F03/K53--K46
-bulk_oil_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2024.06 Lag4/Bulk Oil Table.xlsx")
+bulk_oil_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2024.07 Lag4/Bulk Oil Table.xlsx")
 
 ## sku_actual (Make sure in the MSTR if months info input correct) 
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
-sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2024.06 Lag4/shipped.xlsx")
+sku_actual <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2024.07 Lag4/shipped.xlsx")
 
 # Input sales orders (Make sure in the MSTR if months info input correct) 
 # https://edgeanalytics.venturafoods.com/MicroStrategyLibrary/app/DF007F1C11E9B3099BB30080EF7513D2/7D421DDA4D4411DA73B4469771826BD9/W62--K46
-sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2024.06 Lag4/ordered.xlsx")
+sales_orders <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2024.07 Lag4/ordered.xlsx")
 
 
 # Completed SKU List 
-completed_sku_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Safety Stock Compliance/Weekly Run Files/2024/07.02.2024/Completed SKU list - Linda.xlsx")
+completed_sku_list <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Safety Stock Compliance/Weekly Run Files/2024/07.30.2024/Completed SKU list - Linda.xlsx")
 
 ###########################################################################################################################
 
@@ -704,7 +704,9 @@ bom %>%
                 component = comp_number_labor_code) %>% 
   dplyr::mutate(mfg_ref = paste0(mfg_loc, "_", sku),
                 mfg_comp_ref = paste0(mfg_loc, "_", component)) %>% 
-  dplyr::select(-mfg_loc) %>% 
+  dplyr::left_join(oil_list_3) %>% 
+  dplyr::filter(!is.na(oil)) %>% 
+  dplyr::select(-oil, -mfg_loc) %>% 
   dplyr::relocate(ref, comp_ref, mfg_ref, mfg_comp_ref, sku, component, quantity_w_scrap) %>% 
   dplyr::mutate(quantity_w_scrap = round(quantity_w_scrap, 8)) -> bom
 
@@ -809,7 +811,7 @@ qwc %>%
   dplyr::group_by(qwc_ref) %>%
   dplyr::summarise(quantity_w_scrap = sum(quantity_w_scrap)) -> qwc_table
 
-oil_comsumption_comparison_ver2 %>% 
+oil_comsumption_comparison %>% 
   dplyr::left_join(bom_2) -> oil_comsumption_comparison_ver2
 
 
@@ -897,10 +899,18 @@ oil_comsumption_comparison_ver2 %>%
   dplyr::mutate(mfg_ref = gsub("_", "-", mfg_ref)) -> oil_comsumption_comparison_ver2 
 
 
+
+oil_list %>% 
+  dplyr::select(component, category) %>% 
+  dplyr::rename(oil_description = category) -> oil_desc
+
+
+
 # column rename
 oil_comsumption_comparison_final <- oil_comsumption_comparison_ver2
 
 oil_comsumption_comparison_final %>% 
+  dplyr::left_join(oil_desc) %>%
   dplyr::select(year, month, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, component, oil_description, bulk,
                 quantity_w_scrap, adjusted_forecast_cases, forecasted_oil_qty, 
                 actual_shipped_cases, 
@@ -1390,9 +1400,14 @@ oil_comsumption_comparison_lag_1 %>%
   dplyr::mutate(order_qty_final = replace(order_qty_final, is.na(order_qty_final), 0),
                 order_qty_original = replace(order_qty_original, is.na(order_qty_original), 0)) ->  oil_comsumption_comparison_lag_1
 
-
 oil_comsumption_comparison_lag_1 %>% 
   dplyr::left_join(bom_2) -> oil_comsumption_comparison_ver2_lag_1
+
+oil_comsumption_comparison_ver2_lag_1 %>% 
+  dplyr::mutate(qwc_ref = paste0(mfg_ref, "_", component)) %>% 
+  dplyr::left_join(qwc_table, by = "qwc_ref") -> oil_comsumption_comparison_ver2_lag_1
+
+
 
 
 oil_comsumption_comparison_ver2_lag_1 %>% 
@@ -1923,6 +1938,11 @@ oil_comsumption_comparison_lag_2 %>%
   dplyr::left_join(sales_orders_pivot %>% select(-mfg_ref), by = "date_ref") -> oil_comsumption_comparison_lag_2
 
 
+
+
+
+
+
 # NA to 0
 oil_comsumption_comparison_lag_2 %>% 
   dplyr::mutate(order_qty_final = replace(order_qty_final, is.na(order_qty_final), 0),
@@ -1931,6 +1951,12 @@ oil_comsumption_comparison_lag_2 %>%
 
 oil_comsumption_comparison_lag_2 %>% 
   dplyr::left_join(bom_2) -> oil_comsumption_comparison_ver2_lag_2
+
+
+oil_comsumption_comparison_ver2_lag_2 %>% 
+  dplyr::mutate(qwc_ref = paste0(mfg_ref, "_", component)) %>% 
+  dplyr::left_join(qwc_table, by = "qwc_ref") -> oil_comsumption_comparison_ver2_lag_2
+
 
 
 oil_comsumption_comparison_ver2_lag_2 %>% 
@@ -2467,6 +2493,12 @@ oil_comsumption_comparison_lag_3 %>%
 
 
 oil_comsumption_comparison_ver2_lag_3 %>% 
+  dplyr::mutate(qwc_ref = paste0(mfg_ref, "_", component)) %>% 
+  dplyr::left_join(qwc_table, by = "qwc_ref") -> oil_comsumption_comparison_ver2_lag_3
+
+
+
+oil_comsumption_comparison_ver2_lag_3 %>% 
   dplyr::mutate(forecasted_oil_qty = adjusted_forecast_cases * quantity_w_scrap,
                 consumption_qty_actual_shipped = actual_shipped_cases * quantity_w_scrap,
                 consumption_percent_adjusted_actual_shipped = consumption_qty_actual_shipped / forecasted_oil_qty) %>%
@@ -3000,6 +3032,13 @@ oil_comsumption_comparison_lag_4 %>%
   dplyr::left_join(bom_2) -> oil_comsumption_comparison_ver2_lag_4
 
 
+
+oil_comsumption_comparison_ver2_lag_4 %>% 
+  dplyr::mutate(qwc_ref = paste0(mfg_ref, "_", component)) %>% 
+  dplyr::left_join(qwc_table, by = "qwc_ref") -> oil_comsumption_comparison_ver2_lag_4
+
+
+
 oil_comsumption_comparison_ver2_lag_4 %>% 
   dplyr::mutate(forecasted_oil_qty = adjusted_forecast_cases * quantity_w_scrap,
                 consumption_qty_actual_shipped = actual_shipped_cases * quantity_w_scrap,
@@ -3189,7 +3228,7 @@ s_1 %>%
 
 
 # Export to Excel File ----
-writexl::write_xlsx(identitied_skus_not_existing, "C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2024.06 Lag4/Identitied skus not existing.xlsx")
+writexl::write_xlsx(identitied_skus_not_existing, "C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2024.07 Lag4/Identitied skus not existing.xlsx")
 
 
 
@@ -3225,76 +3264,78 @@ sku_actual_pivot %>%
 
 
 
-# missing sku final page
-identitied_skus_not_existing %>% 
-  data.frame() %>% 
-  dplyr::rename(mfg_ref = ref) %>%
-  dplyr::mutate(mfg_ref = gsub("-", "_", mfg_ref)) %>% 
-  dplyr::relocate(date_ref, year, month, mfg_ref, mfg_loc, sku) %>% 
-  dplyr::left_join(sales_orders_for_missing_sku) %>% 
-  dplyr::rename(sku_description = x8) %>% 
-  dplyr::mutate(label = stringr::str_sub(sku, 6, 9)) %>% 
-  dplyr::left_join(completed_sku_list) %>% 
-  dplyr::mutate(group_no = "n/a",
-                group = "n/a",
-                adjusted_forecast_cases_lag0 = 0,
-                forecasted_oil_qty_lag0 = 0,
-                consumption_percent_adjusted_actual_shipped_lag0 = "n/a",
-                diff_between_forecast_actual_lag0 = "n/a",
-                consumption_percent_adjusted_sales_order_lag0 = "n/a",
-                diff_between_forecast_original_lag0 = "n/a",
-                adjusted_forecast_cases_lag1 = 0,
-                forecasted_oil_qty_lag1 = 0,
-                consumption_percent_adjusted_actual_shipped_lag1 = "n/a",
-                diff_between_forecast_actual_lag1 = "n/a",
-                consumption_percent_adjusted_sales_order_lag1 = "n/a",
-                diff_between_forecast_original_lag1 = "n/a",
-                adjusted_forecast_cases_lag2 = 0,
-                forecasted_oil_qty_lag2 = 0,
-                consumption_percent_adjusted_actual_shipped_lag2 = "n/a",
-                diff_between_forecast_actual_lag2 = "n/a",
-                consumption_percent_adjusted_sales_order_lag2 = "n/a",
-                diff_between_forecast_original_lag2 = "n/a",
-                adjusted_forecast_cases_lag3 = 0,
-                forecasted_oil_qty_lag3 = 0,
-                consumption_percent_adjusted_actual_shipped_lag3 = "n/a",
-                diff_between_forecast_actual_lag3 = "n/a",
-                consumption_percent_adjusted_sales_order_lag3 = "n/a",
-                diff_between_forecast_original_lag3 = "n/a",
-                adjusted_forecast_cases_lag4 = 0,
-                forecasted_oil_qty_lag4 = 0,
-                consumption_percent_adjusted_actual_shipped_lag4 = "n/a",
-                diff_between_forecast_actual_lag4 = "n/a",
-                consumption_percent_adjusted_sales_order_lag4 = "n/a",
-                diff_between_forecast_original_lag4 = "n/a") %>% 
-  dplyr::left_join(bom_2) %>% 
-  dplyr::left_join(sku_actual_for_missing_sku) %>% 
-  dplyr::mutate(consumption_qty_actual_shipped = actual_shipped_cases * quantity_w_scrap) %>% 
-  dplyr::left_join(sales_orders_for_missing_sku_2) %>% 
-  dplyr::left_join(oil_desc) %>%
-  dplyr::left_join(bulk_oil_list_merge) %>% 
-  dplyr::mutate(bulk = ifelse(is.na(bulk), "N", bulk)) %>% 
-  dplyr::mutate(consumption_qty_sales_order_qty = order_qty_final * quantity_w_scrap) %>% 
-  dplyr::select(year, month, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, component, oil_description, bulk,
-                quantity_w_scrap, actual_shipped_cases, consumption_qty_actual_shipped, order_qty_final,
-                order_qty_original,	consumption_qty_sales_order_qty, 
-                
-                adjusted_forecast_cases_lag0, forecasted_oil_qty_lag0, consumption_percent_adjusted_actual_shipped_lag0, diff_between_forecast_actual_lag0, 
-                consumption_percent_adjusted_sales_order_lag0, diff_between_forecast_original_lag0, 
-                
-                adjusted_forecast_cases_lag1, forecasted_oil_qty_lag1, consumption_percent_adjusted_actual_shipped_lag1, diff_between_forecast_actual_lag1, 
-                consumption_percent_adjusted_sales_order_lag1, diff_between_forecast_original_lag1, 
-                
-                adjusted_forecast_cases_lag2, forecasted_oil_qty_lag2, consumption_percent_adjusted_actual_shipped_lag2, diff_between_forecast_actual_lag2, 
-                consumption_percent_adjusted_sales_order_lag2, diff_between_forecast_original_lag2, 
-                
-                adjusted_forecast_cases_lag3, forecasted_oil_qty_lag3, consumption_percent_adjusted_actual_shipped_lag3, diff_between_forecast_actual_lag3, 
-                consumption_percent_adjusted_sales_order_lag3, diff_between_forecast_original_lag3, 
-                
-                adjusted_forecast_cases_lag4, forecasted_oil_qty_lag4, consumption_percent_adjusted_actual_shipped_lag4, diff_between_forecast_actual_lag4, 
-                consumption_percent_adjusted_sales_order_lag4, diff_between_forecast_original_lag4) %>% 
-  
-  dplyr::arrange(year, month, mfg_loc, sku) -> identitied_skus_not_existing_2
+# # missing sku final page
+# identitied_skus_not_existing %>% 
+#   data.frame() %>% 
+#   dplyr::rename(mfg_ref = ref) %>%
+#   dplyr::mutate(mfg_ref = gsub("-", "_", mfg_ref)) %>% 
+#   dplyr::relocate(date_ref, year, month, mfg_ref, mfg_loc, sku) %>% 
+#   dplyr::left_join(sales_orders_for_missing_sku) %>% 
+#   dplyr::rename(sku_description = x8) %>% 
+#   dplyr::mutate(label = stringr::str_sub(sku, 6, 9)) %>% 
+#   dplyr::left_join(completed_sku_list) %>% 
+#   dplyr::mutate(group_no = "n/a",
+#                 group = "n/a",
+#                 adjusted_forecast_cases_lag0 = 0,
+#                 forecasted_oil_qty_lag0 = 0,
+#                 consumption_percent_adjusted_actual_shipped_lag0 = "n/a",
+#                 diff_between_forecast_actual_lag0 = "n/a",
+#                 consumption_percent_adjusted_sales_order_lag0 = "n/a",
+#                 diff_between_forecast_original_lag0 = "n/a",
+#                 adjusted_forecast_cases_lag1 = 0,
+#                 forecasted_oil_qty_lag1 = 0,
+#                 consumption_percent_adjusted_actual_shipped_lag1 = "n/a",
+#                 diff_between_forecast_actual_lag1 = "n/a",
+#                 consumption_percent_adjusted_sales_order_lag1 = "n/a",
+#                 diff_between_forecast_original_lag1 = "n/a",
+#                 adjusted_forecast_cases_lag2 = 0,
+#                 forecasted_oil_qty_lag2 = 0,
+#                 consumption_percent_adjusted_actual_shipped_lag2 = "n/a",
+#                 diff_between_forecast_actual_lag2 = "n/a",
+#                 consumption_percent_adjusted_sales_order_lag2 = "n/a",
+#                 diff_between_forecast_original_lag2 = "n/a",
+#                 adjusted_forecast_cases_lag3 = 0,
+#                 forecasted_oil_qty_lag3 = 0,
+#                 consumption_percent_adjusted_actual_shipped_lag3 = "n/a",
+#                 diff_between_forecast_actual_lag3 = "n/a",
+#                 consumption_percent_adjusted_sales_order_lag3 = "n/a",
+#                 diff_between_forecast_original_lag3 = "n/a",
+#                 adjusted_forecast_cases_lag4 = 0,
+#                 forecasted_oil_qty_lag4 = 0,
+#                 consumption_percent_adjusted_actual_shipped_lag4 = "n/a",
+#                 diff_between_forecast_actual_lag4 = "n/a",
+#                 consumption_percent_adjusted_sales_order_lag4 = "n/a",
+#                 diff_between_forecast_original_lag4 = "n/a") %>% 
+#   dplyr::left_join(bom_2) %>% 
+#   dplyr::left_join(sku_actual_for_missing_sku) %>% 
+#   dplyr::mutate(ref = paste0(location, "_", sku)) %>% 
+#   dplyr::mutate(qwc_ref = paste0(ref, "_", component)) %>% 
+#   dplyr::mutate(consumption_qty_actual_shipped = actual_shipped_cases * quantity_w_scrap) %>% 
+#   dplyr::left_join(sales_orders_for_missing_sku_2) %>% 
+#   dplyr::left_join(oil_desc) %>%
+#   dplyr::left_join(bulk_oil_list_merge) %>% 
+#   dplyr::mutate(bulk = ifelse(is.na(bulk), "N", bulk)) %>% 
+#   dplyr::mutate(consumption_qty_sales_order_qty = order_qty_final * quantity_w_scrap) %>% 
+#   dplyr::select(year, month, mfg_ref, mfg_loc, sku, sku_description, label, category, platform, group_no, group, component, oil_description, bulk,
+#                 quantity_w_scrap, actual_shipped_cases, consumption_qty_actual_shipped, order_qty_final,
+#                 order_qty_original,	consumption_qty_sales_order_qty, 
+#                 
+#                 adjusted_forecast_cases_lag0, forecasted_oil_qty_lag0, consumption_percent_adjusted_actual_shipped_lag0, diff_between_forecast_actual_lag0, 
+#                 consumption_percent_adjusted_sales_order_lag0, diff_between_forecast_original_lag0, 
+#                 
+#                 adjusted_forecast_cases_lag1, forecasted_oil_qty_lag1, consumption_percent_adjusted_actual_shipped_lag1, diff_between_forecast_actual_lag1, 
+#                 consumption_percent_adjusted_sales_order_lag1, diff_between_forecast_original_lag1, 
+#                 
+#                 adjusted_forecast_cases_lag2, forecasted_oil_qty_lag2, consumption_percent_adjusted_actual_shipped_lag2, diff_between_forecast_actual_lag2, 
+#                 consumption_percent_adjusted_sales_order_lag2, diff_between_forecast_original_lag2, 
+#                 
+#                 adjusted_forecast_cases_lag3, forecasted_oil_qty_lag3, consumption_percent_adjusted_actual_shipped_lag3, diff_between_forecast_actual_lag3, 
+#                 consumption_percent_adjusted_sales_order_lag3, diff_between_forecast_original_lag3, 
+#                 
+#                 adjusted_forecast_cases_lag4, forecasted_oil_qty_lag4, consumption_percent_adjusted_actual_shipped_lag4, diff_between_forecast_actual_lag4, 
+#                 consumption_percent_adjusted_sales_order_lag4, diff_between_forecast_original_lag4) %>% 
+#   
+#   dplyr::arrange(year, month, mfg_loc, sku) -> identitied_skus_not_existing_2
 
 
 
@@ -3307,14 +3348,14 @@ oil_comsumption_comparison_final %>%
   dplyr::mutate(dsx = "Y") -> oil_comsumption_comparison_final
 
 
-identitied_skus_not_existing_2 %>% 
-  dplyr::mutate(dsx = "N") -> identitied_skus_not_existing_2
+# identitied_skus_not_existing_2 %>% 
+#   dplyr::mutate(dsx = "N") -> identitied_skus_not_existing_2
 
-rbind(oil_comsumption_comparison_final, identitied_skus_not_existing_2) -> final_paper
+# rbind(oil_comsumption_comparison_final, identitied_skus_not_existing_2) -> final_paper
 
 
 
-final_paper %>% 
+oil_comsumption_comparison_final %>% 
   dplyr::filter(!(year == year(Sys.Date()) & month == month(Sys.Date()))) -> final_paper
 
 
@@ -3376,5 +3417,5 @@ colnames(final_paper)[51]	<-	"DSX"
 
 
 # Export to Excel File ----
-writexl::write_xlsx(final_paper, "C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2024.06 Lag4/oil_consumption_comparison.xlsx")
+writexl::write_xlsx(final_paper, "C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/Oil Consumption/12 month rolling report/2024.07 Lag4/oil_consumption_comparison.xlsx")
 
