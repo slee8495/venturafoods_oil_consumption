@@ -642,25 +642,45 @@ rm_to_sku %>%
   dplyr::select(-1) %>% 
   dplyr::rename(sku = parent_item_number) %>%
   dplyr::slice(-n()) %>% 
-  dplyr::filter(!is.na(component)) -> rm_to_sku
+  dplyr::filter(!is.na(component)) -> rm_to_sku_comp_component_original
+
+rm_to_sku_comp_component_original %>%
+  dplyr::select(component) %>% 
+  dplyr::mutate(component = as.double(component)) -> rm_to_sku_comp_component
 
 
+rm_to_sku %>% 
+  janitor::clean_names() %>% 
+  readr::type_convert() %>% 
+  dplyr::select(1:3) %>%
+  dplyr::mutate(comp_ref = gsub("-", "_", comp_ref)) %>% 
+  dplyr::rename(sku = parent_item_number) %>%
+  dplyr::slice(-n()) %>% 
+  tidyr::separate(comp_ref, c("location", "component"), sep = "_") %>% 
+  dplyr::filter(!is.na(component)) %>% 
+  dplyr::mutate(comp_ref = paste0(location, "_", component)) %>% 
+  dplyr::select(-location) -> rm_to_sku_comp_ref_original
+
+rm_to_sku_comp_ref_original %>%
+  dplyr::select(comp_ref)  -> rm_to_sku_comp
 
 # combine oil list and RM to Sku
 oil_list %>% 
   dplyr::select(component) -> oil_list_2
 
-rm_to_sku %>%
-  dplyr::select(component) %>% 
-  dplyr::mutate(component = as.double(component)) -> rm_to_sku_comp
 
-dplyr::intersect(rm_to_sku_comp, oil_list_2) %>% 
+
+dplyr::intersect(rm_to_sku_comp_component, oil_list_2) %>% 
   dplyr::mutate(oil = "oil") -> oil_list_3
 
-rm_to_sku %>% 
-  dplyr::mutate(component = as.double(component)) -> rm_to_sku
+
 
 rm_to_sku %>% 
+  janitor::clean_names() %>% 
+  dplyr::rename(sku = parent_item_number) %>% 
+  tidyr::separate(comp_ref, c("location", "component"), sep = "-") %>% 
+  dplyr::select(component, sku) %>% 
+  dplyr::mutate(component = as.double(component)) %>% 
   dplyr::left_join(oil_list_3, by = "component") %>% 
   filter(!is.na(oil)) %>% 
   dplyr::select(component, sku) -> oil_included_sku
@@ -3358,7 +3378,9 @@ oil_comsumption_comparison_final %>%
 oil_comsumption_comparison_final %>% 
   dplyr::filter(!(year == year(Sys.Date()) & month == month(Sys.Date()))) -> final_paper
 
-
+final_paper %>% 
+  dplyr::filter(!is.na(component)) %>% 
+  dplyr::filter(!is.na(quantity_w_scrap)) -> final_paper
 
 
 
