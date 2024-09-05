@@ -35,11 +35,11 @@ dsx_12 <- read_excel("S:/Global Shared Folders/Large Documents/S&OP/Demand Plann
 ######################################################### Other List ######################################################
 
 # BoM RM to sku 
-rm_to_sku <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/IQR Automation/RM/Weekly Report run/2024/07.30.2024/Raw Material Inventory Health (IQR) NEW TEMPLATE - 09.03.2024.xlsx", 
+rm_to_sku <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/IQR Automation/RM/Weekly Report run/2024/09.03.2024/Raw Material Inventory Health (IQR) NEW TEMPLATE - 09.03.2024.xlsx", 
                         sheet = "RM to SKU")
 
 # BoM Report 
-bom <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/IQR Automation/RM/Weekly Report run/2024/07.30.2024/Raw Material Inventory Health (IQR) NEW TEMPLATE - 09.03.2024.xlsx", 
+bom <- read_excel("C:/Users/slee/OneDrive - Ventura Foods/Ventura Work/SCE/Project/FY 23/IQR Automation/RM/Weekly Report run/2024/09.03.2024/Raw Material Inventory Health (IQR) NEW TEMPLATE - 09.03.2024.xlsx", 
                   sheet = "BoM")
 
 # Bulk Oil List ----
